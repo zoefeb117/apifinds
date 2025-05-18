@@ -5,11 +5,7 @@ export const useChat = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [schema, setSchema] = useState<Schema | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([
-    { id: '1', name: 'E-commerce Platform', lastUpdated: '2025-03-15' },
-    { id: '2', name: 'Social Media App', lastUpdated: '2025-03-14' },
-    { id: '3', name: 'AI Chat Integration', lastUpdated: '2025-03-13' },
-  ]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
 
   const createNewChat = () => {
@@ -35,8 +31,17 @@ export const useChat = () => {
     setMessages(prev => [...prev, userMessage]);
     setIsProcessing(true);
     
-    // Update project timestamp
-    if (currentProjectId) {
+    // Create new project if none exists
+    if (!currentProjectId) {
+      const newProject: Project = {
+        id: Date.now().toString(),
+        name: content.slice(0, 30) + '...',
+        lastUpdated: new Date().toISOString()
+      };
+      setProjects(prev => [newProject, ...prev]);
+      setCurrentProjectId(newProject.id);
+    } else {
+      // Update existing project
       setProjects(prev => prev.map(project => 
         project.id === currentProjectId 
           ? { ...project, lastUpdated: new Date().toISOString() }
@@ -44,12 +49,12 @@ export const useChat = () => {
       ));
     }
     
-    // Simulate API recommendation generation
+    // Simulate API response
     setTimeout(() => {
       const systemMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'system',
-        content: `Based on your project description: "${content}", I've identified relevant APIs and integration options. You can find the recommended endpoints and integration details in the panel on the right.`,
+        content: `Based on your needs, here are the recommended APIs and integration details.`,
         timestamp: new Date().toISOString()
       };
       
@@ -57,7 +62,7 @@ export const useChat = () => {
       
       setSchema({
         id: Date.now().toString(),
-        content: JSON.stringify(mockRecommendations),
+        content: JSON.stringify(generateMockSchema(content)),
         version: 1,
         timestamp: new Date().toISOString()
       });
@@ -77,13 +82,60 @@ export const useChat = () => {
   };
 };
 
-// Mock API recommendations schema
-const mockRecommendations = {
-  openapi: "3.0.0",
-  info: {
-    title: "Recommended APIs",
-    description: "Curated API recommendations based on your project needs",
-    version: "1.0.0"
-  },
-  // ... rest of the mock schema
+// Mock schema generator
+const generateMockSchema = (content: string) => {
+  const apis = {
+    'payment': {
+      'Stripe': {
+        'description': 'Payment processing API',
+        'endpoints': {
+          '/v1/payments': { 'method': 'POST', 'description': 'Create a payment' },
+          '/v1/refunds': { 'method': 'POST', 'description': 'Issue a refund' }
+        }
+      },
+      'PayPal': {
+        'description': 'Payment gateway API',
+        'endpoints': {
+          '/v1/orders': { 'method': 'POST', 'description': 'Create an order' },
+          '/v1/payments': { 'method': 'POST', 'description': 'Process payment' }
+        }
+      }
+    },
+    'social': {
+      'Facebook': {
+        'description': 'Social media integration',
+        'endpoints': {
+          '/v1/share': { 'method': 'POST', 'description': 'Share content' },
+          '/v1/user': { 'method': 'GET', 'description': 'Get user profile' }
+        }
+      },
+      'Twitter': {
+        'description': 'Social media API',
+        'endpoints': {
+          '/v1/tweets': { 'method': 'POST', 'description': 'Post a tweet' },
+          '/v1/user': { 'method': 'GET', 'description': 'Get user info' }
+        }
+      }
+    }
+  };
+
+  const content_lower = content.toLowerCase();
+  let selectedApis = {};
+
+  if (content_lower.includes('payment')) {
+    selectedApis = { ...selectedApis, ...apis.payment };
+  }
+  if (content_lower.includes('social')) {
+    selectedApis = { ...selectedApis, ...apis.social };
+  }
+
+  return {
+    openapi: '3.0.0',
+    info: {
+      title: 'Recommended APIs',
+      version: '1.0.0',
+      description: 'API recommendations based on your requirements'
+    },
+    paths: selectedApis
+  };
 };

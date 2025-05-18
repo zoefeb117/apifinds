@@ -10,7 +10,6 @@ interface SchemaDisplayProps {
 const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({});
 
-  // Parse the schema content
   const schemaObj = React.useMemo(() => {
     try {
       return JSON.parse(schema.content);
@@ -50,7 +49,7 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
             <ChevronDown className="h-4 w-4 mr-2" /> : 
             <ChevronRight className="h-4 w-4 mr-2" />
           }
-          <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400">Endpoints</h3>
+          <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400">Available Platforms</h3>
         </div>
         
         {expandedSections['paths'] && (
@@ -61,22 +60,20 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
             transition={{ duration: 0.3 }}
             className="pl-6 mt-2"
           >
-            {Object.entries(schemaObj.paths).map(([path, methods]: [string, any]) => (
-              <div key={path} className="mb-4">
+            {Object.entries(schemaObj.paths).map(([platform, details]: [string, any]) => (
+              <div key={platform} className="mb-4">
                 <div 
                   className="flex items-center cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-                  onClick={() => toggleSection(`path-${path}`)}
+                  onClick={() => toggleSection(`platform-${platform}`)}
                 >
-                  {expandedSections[`path-${path}`] ? 
+                  {expandedSections[`platform-${platform}`] ? 
                     <ChevronDown className="h-4 w-4 mr-2" /> : 
                     <ChevronRight className="h-4 w-4 mr-2" />
                   }
-                  <code className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-900 dark:text-gray-100">
-                    {path}
-                  </code>
+                  <h4 className="text-lg font-semibold">{platform}</h4>
                 </div>
                 
-                {expandedSections[`path-${path}`] && (
+                {expandedSections[`platform-${platform}`] && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
@@ -84,112 +81,29 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                     transition={{ duration: 0.3 }}
                     className="pl-6 mt-2"
                   >
-                    {Object.entries(methods).map(([method, details]: [string, any]) => (
-                      <div key={`${path}-${method}`} className="mb-3 border-l-2 border-gray-200 dark:border-gray-700 pl-3">
+                    {details.description && (
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        {details.description}
+                      </p>
+                    )}
+                    {details.endpoints && Object.entries(details.endpoints).map(([endpoint, info]: [string, any]) => (
+                      <div key={endpoint} className="mb-3 border-l-2 border-gray-200 dark:border-gray-700 pl-3">
                         <div className="flex items-center">
                           <span className={`uppercase font-mono text-xs px-2 py-1 rounded ${
-                            method === 'get' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' :
-                            method === 'post' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400' :
-                            method === 'put' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400' :
-                            method === 'delete' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400' :
-                            'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400'
+                            info.method === 'GET' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' :
+                            info.method === 'POST' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400' :
+                            info.method === 'PUT' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400' :
+                            'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'
                           }`}>
-                            {method}
+                            {info.method}
                           </span>
-                          <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                            {details.summary || 'No description'}
-                          </span>
+                          <code className="ml-2 font-mono text-sm">{endpoint}</code>
                         </div>
-                        
-                        {details.description && (
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                            {details.description}
-                          </p>
-                        )}
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          {info.description}
+                        </p>
                       </div>
                     ))}
-                  </motion.div>
-                )}
-              </div>
-            ))}
-          </motion.div>
-        )}
-      </div>
-    );
-  };
-
-  const renderComponents = () => {
-    if (!schemaObj.components || !schemaObj.components.schemas) return null;
-    
-    return (
-      <div className="mb-6">
-        <div 
-          className="flex items-center cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-          onClick={() => toggleSection('components')}
-        >
-          {expandedSections['components'] ? 
-            <ChevronDown className="h-4 w-4 mr-2" /> : 
-            <ChevronRight className="h-4 w-4 mr-2" />
-          }
-          <h3 className="text-lg font-semibold text-purple-600 dark:text-purple-400">Models / Schemas</h3>
-        </div>
-        
-        {expandedSections['components'] && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="pl-6 mt-2"
-          >
-            {Object.entries(schemaObj.components.schemas).map(([name, schema]: [string, any]) => (
-              <div key={name} className="mb-4">
-                <div 
-                  className="flex items-center cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-                  onClick={() => toggleSection(`schema-${name}`)}
-                >
-                  {expandedSections[`schema-${name}`] ? 
-                    <ChevronDown className="h-4 w-4 mr-2" /> : 
-                    <ChevronRight className="h-4 w-4 mr-2" />
-                  }
-                  <code className="font-mono bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-900 dark:text-gray-100">
-                    {name}
-                  </code>
-                </div>
-                
-                {expandedSections[`schema-${name}`] && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="pl-6 mt-2"
-                  >
-                    {schema.properties && (
-                      <div className="border rounded-lg overflow-hidden">
-                        <div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 text-xs font-medium text-gray-700 dark:text-gray-300 uppercase border-b">
-                          Properties
-                        </div>
-                        <div className="divide-y divide-gray-200 dark:divide-gray-700">
-                          {Object.entries(schema.properties).map(([propName, propDetails]: [string, any]) => (
-                            <div key={propName} className="px-4 py-3">
-                              <div className="flex justify-between">
-                                <span className="font-medium text-gray-900 dark:text-gray-100">{propName}</span>
-                                <span className="text-sm font-mono text-gray-600 dark:text-gray-400">
-                                  {propDetails.type || 'object'}
-                                  {propDetails.format ? ` (${propDetails.format})` : ''}
-                                </span>
-                              </div>
-                              {propDetails.description && (
-                                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                                  {propDetails.description}
-                                </p>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </motion.div>
                 )}
               </div>
@@ -218,36 +132,6 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
       
       <div className="p-4">
         {renderPaths()}
-        {renderComponents()}
-        
-        <div className="mb-6">
-          <div 
-            className="flex items-center cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-            onClick={() => toggleSection('raw')}
-          >
-            {expandedSections['raw'] ? 
-              <ChevronDown className="h-4 w-4 mr-2" /> : 
-              <ChevronRight className="h-4 w-4 mr-2" />
-            }
-            <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-400">Raw JSON</h3>
-          </div>
-          
-          {expandedSections['raw'] && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="mt-2"
-            >
-              <pre className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg overflow-x-auto text-sm">
-                <code className="text-gray-800 dark:text-gray-200">
-                  {JSON.stringify(schemaObj, null, 2)}
-                </code>
-              </pre>
-            </motion.div>
-          )}
-        </div>
       </div>
     </div>
   );

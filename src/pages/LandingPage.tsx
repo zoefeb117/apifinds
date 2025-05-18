@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../components/ThemeProvider';
 import { GitBranch, Sun, Moon, ArrowRight, Sparkles, Zap, Shield, Globe } from 'lucide-react';
 
@@ -31,11 +31,11 @@ const LandingPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
+            <Link to="/" className="flex items-center space-x-3">
               <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <GitBranch className="h-5 w-5 text-white" />
               </div>
@@ -43,6 +43,17 @@ const LandingPage: React.FC = () => {
                 <h1 className="text-xl font-bold">apifinds</h1>
                 <p className="text-xs text-gray-600 dark:text-gray-400">Integration Made Simple</p>
               </div>
+            </Link>
+            <div className="hidden md:flex items-center space-x-6">
+              <Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+                Documentation
+              </Link>
+              <Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+                Pricing
+              </Link>
+              <Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+                Blog
+              </Link>
             </div>
             <div className="flex items-center space-x-4">
               <button
@@ -61,11 +72,10 @@ const LandingPage: React.FC = () => {
               </button>
             </div>
           </div>
-        </div>
+        </nav>
       </header>
 
       <main>
-        {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div className="text-center">
@@ -86,7 +96,6 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Features Section */}
         <div className="bg-white dark:bg-gray-800 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -115,8 +124,8 @@ const LandingPage: React.FC = () => {
 
       <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="flex items-center space-x-3 md:col-span-4 mb-8">
               <div className="h-8 w-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <GitBranch className="h-4 w-4 text-white" />
               </div>
@@ -124,16 +133,41 @@ const LandingPage: React.FC = () => {
                 © 2025 apifinds. All rights reserved.
               </span>
             </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
-                Documentation
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
-                Blog
-              </a>
-              <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
-                Support
-              </a>
+            <div>
+              <h3 className="font-semibold mb-3">Product</h3>
+              <ul className="space-y-2">
+                <li><Link to="/features" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Features</Link></li>
+                <li><Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Pricing</Link></li>
+                <li><Link to="/integrations" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Integrations</Link></li>
+                <li><Link to="/enterprise" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Enterprise</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-3">Resources</h3>
+              <ul className="space-y-2">
+                <li><Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Documentation</Link></li>
+                <li><Link to="/guides" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">API Guides</Link></li>
+                <li><Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Blog</Link></li>
+                <li><Link to="/changelog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Changelog</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-3">Company</h3>
+              <ul className="space-y-2">
+                <li><Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">About</Link></li>
+                <li><Link to="/careers" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Careers</Link></li>
+                <li><Link to="/contact" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Contact</Link></li>
+                <li><Link to="/partners" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Partners</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-3">Legal</h3>
+              <ul className="space-y-2">
+                <li><Link to="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Terms of Service</Link></li>
+                <li><Link to="/security" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Security</Link></li>
+                <li><Link to="/compliance" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Compliance</Link></li>
+              </ul>
             </div>
           </div>
         </div>

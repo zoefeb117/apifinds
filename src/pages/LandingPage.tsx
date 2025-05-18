@@ -40,7 +40,7 @@ const LandingPage: React.FC = () => {
                 <GitBranch className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">API Architect</h1>
+                <h1 className="text-xl font-bold">apifinds</h1>
                 <p className="text-xs text-gray-600 dark:text-gray-400">Integration Made Simple</p>
               </div>
             </div>
@@ -90,7 +90,7 @@ const LandingPage: React.FC = () => {
         <div className="bg-white dark:bg-gray-800 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">Why Choose API Architect?</h2>
+              <h2 className="text-3xl font-bold mb-4">Why Choose apifinds?</h2>
               <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                 Our intelligent platform helps you find and integrate the right APIs for your project, saving you hours of research and implementation time.
               </p>
@@ -121,7 +121,7 @@ const LandingPage: React.FC = () => {
                 <GitBranch className="h-4 w-4 text-white" />
               </div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                © 2025 API Architect. All rights reserved.
+                © 2025 apifinds. All rights reserved.
               </span>
             </div>
             <div className="flex space-x-6">

@@ -13,7 +13,7 @@ const Header: React.FC = () => {
             <GitBranch className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-xl tracking-tight">API Architect</h1>
+            <h1 className="font-bold text-xl tracking-tight">apifinds</h1>
             <p className="text-xs text-gray-600 dark:text-gray-400">Natural Language API Schema Generator</p>
           </div>
         </div>

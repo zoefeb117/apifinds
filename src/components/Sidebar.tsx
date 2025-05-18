@@ -1,25 +1,24 @@
 import React from 'react';
 import { PanelLeftClose, PanelLeft, Plus, MessageSquare } from 'lucide-react';
-
-interface Project {
-  id: string;
-  name: string;
-  lastUpdated: string;
-}
+import { Project } from '../types';
 
 interface SidebarProps {
   isOpen: boolean;
   onToggle: () => void;
+  projects: Project[];
+  currentProjectId: string | null;
+  onNewChat: () => void;
+  onSelectProject: (id: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
-  // Mock projects data - in a real app this would come from your backend
-  const projects: Project[] = [
-    { id: '1', name: 'E-commerce Platform', lastUpdated: '2025-03-15' },
-    { id: '2', name: 'Social Media App', lastUpdated: '2025-03-14' },
-    { id: '3', name: 'AI Chat Integration', lastUpdated: '2025-03-13' },
-  ];
-
+const Sidebar: React.FC<SidebarProps> = ({ 
+  isOpen, 
+  onToggle, 
+  projects,
+  currentProjectId,
+  onNewChat,
+  onSelectProject
+}) => {
   return (
     <div 
       className={`fixed top-[61px] left-0 h-[calc(100vh-61px)] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-20 ${
@@ -43,6 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-semibold">Projects</h2>
             <button 
+              onClick={onNewChat}
               className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 bg-gray-100 dark:bg-gray-700 rounded-lg"
               aria-label="New project"
             >
@@ -54,7 +54,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
             {projects.map((project) => (
               <button
                 key={project.id}
-                className="w-full p-3 flex items-center space-x-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
+                onClick={() => onSelectProject(project.id)}
+                className={`w-full p-3 flex items-center space-x-3 rounded-lg transition-colors text-left ${
+                  currentProjectId === project.id
+                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                }`}
               >
                 <MessageSquare className="h-4 w-4 text-gray-500" />
                 <div className="flex-1 min-w-0">

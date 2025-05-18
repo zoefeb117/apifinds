@@ -11,3 +11,9 @@ export interface Schema {
   version: number;
   timestamp: string;
 }
+
+export interface Project {
+  id: string;
+  name: string;
+  lastUpdated: string;
+}

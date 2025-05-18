@@ -10,7 +10,15 @@ const Dashboard: React.FC = () => {
   const [resizing, setResizing] = useState(false);
   const [splitPosition, setSplitPosition] = useState(40); // percentage
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { messages, schema, sendMessage, isProcessing } = useChat();
+  const { 
+    messages, 
+    schema, 
+    sendMessage, 
+    isProcessing,
+    projects,
+    currentProjectId,
+    createNewChat
+  } = useChat();
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setResizing(true);
@@ -41,12 +49,24 @@ const Dashboard: React.FC = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleSelectProject = (id: string) => {
+    // In a real app, this would load the project's messages and schema
+    console.log('Selected project:', id);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <Header />
       
       <div className="flex-1 flex overflow-hidden relative">
-        <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} />
+        <Sidebar 
+          isOpen={isSidebarOpen} 
+          onToggle={toggleSidebar}
+          projects={projects}
+          currentProjectId={currentProjectId}
+          onNewChat={createNewChat}
+          onSelectProject={handleSelectProject}
+        />
         
         <div 
           id="split-container"

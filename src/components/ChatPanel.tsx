@@ -30,7 +30,6 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
     if (input.trim() && !isProcessing) {
       onSendMessage(input.trim());
       setInput('');
-      
       if (textareaRef.current) {
         textareaRef.current.style.height = 'auto';
       }
@@ -55,6 +54,11 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
     adjustTextareaHeight();
+  };
+
+  const handleExampleClick = (prompt: string) => {
+    setInput(prompt);
+    onSendMessage(prompt);
   };
 
   const examplePrompts = [
@@ -91,7 +95,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
               <button
                 key={index}
                 className="text-left p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-sm"
-                onClick={() => setInput(prompt)}
+                onClick={() => handleExampleClick(prompt)}
               >
                 {prompt}
               </button>

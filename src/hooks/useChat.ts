@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChatMessage, Schema, Project } from '../types';
+import { initializeChat, continueChatSession } from '../services/airops';
 
 export const useChat = (initialPrompt?: string) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -7,9 +8,9 @@ export const useChat = (initialPrompt?: string) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const initialPromptProcessed = useRef(false);
 
-  // Handle initial prompt when component mounts
   useEffect(() => {
     if (initialPrompt && !initialPromptProcessed.current) {
       initialPromptProcessed.current = true;
@@ -27,10 +28,11 @@ export const useChat = (initialPrompt?: string) => {
     setCurrentProjectId(newProject.id);
     setMessages([]);
     setSchema(null);
+    setCurrentSessionId(null);
     initialPromptProcessed.current = false;
   };
 
-  const sendMessage = (content: string) => {
+  const sendMessage = async (content: string) => {
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
@@ -41,7 +43,6 @@ export const useChat = (initialPrompt?: string) => {
     setMessages(prev => [...prev, userMessage]);
     setIsProcessing(true);
     
-    // Create new project if none exists
     if (!currentProjectId) {
       const newProject: Project = {
         id: Date.now().toString(),
@@ -51,34 +52,62 @@ export const useChat = (initialPrompt?: string) => {
       setProjects(prev => [newProject, ...prev]);
       setCurrentProjectId(newProject.id);
     } else {
-      // Update existing project
       setProjects(prev => prev.map(project => 
         project.id === currentProjectId 
           ? { ...project, lastUpdated: new Date().toISOString() }
           : project
       ));
     }
-    
-    // Simulate API response
-    setTimeout(() => {
-      const systemMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
+
+    try {
+      let response;
+      let partialResponse = '';
+
+      const handleToken = (token: string) => {
+        partialResponse += token;
+        const systemMessage: ChatMessage = {
+          id: Date.now().toString(),
+          role: 'system',
+          content: partialResponse,
+          timestamp: new Date().toISOString()
+        };
+        setMessages(prev => {
+          const filtered = prev.filter(msg => msg.role !== 'system' || msg.id !== systemMessage.id);
+          return [...filtered, systemMessage];
+        });
+      };
+
+      if (currentSessionId) {
+        response = await continueChatSession(content, currentSessionId, handleToken);
+      } else {
+        response = await initializeChat(content, handleToken);
+      }
+
+      setCurrentSessionId(response.sessionId);
+
+      try {
+        const schemaData = JSON.parse(response.result);
+        setSchema({
+          id: Date.now().toString(),
+          content: JSON.stringify(schemaData),
+          version: 1,
+          timestamp: new Date().toISOString()
+        });
+      } catch (e) {
+        console.error('Failed to parse schema:', e);
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      const errorMessage: ChatMessage = {
+        id: Date.now().toString(),
         role: 'system',
-        content: `Based on your needs, here are the recommended APIs and integration details.`,
+        content: 'Sorry, there was an error processing your request.',
         timestamp: new Date().toISOString()
       };
-      
-      setMessages(prev => [...prev, systemMessage]);
-      
-      setSchema({
-        id: Date.now().toString(),
-        content: JSON.stringify(generateMockSchema(content)),
-        version: 1,
-        timestamp: new Date().toISOString()
-      });
-      
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsProcessing(false);
-    }, 1500);
+    }
   };
 
   return {
@@ -89,63 +118,5 @@ export const useChat = (initialPrompt?: string) => {
     projects,
     currentProjectId,
     createNewChat
-  };
-};
-
-// Mock schema generator
-const generateMockSchema = (content: string) => {
-  const apis = {
-    'payment': {
-      'Stripe': {
-        'description': 'Payment processing API',
-        'endpoints': {
-          '/v1/payments': { 'method': 'POST', 'description': 'Create a payment' },
-          '/v1/refunds': { 'method': 'POST', 'description': 'Issue a refund' }
-        }
-      },
-      'PayPal': {
-        'description': 'Payment gateway API',
-        'endpoints': {
-          '/v1/orders': { 'method': 'POST', 'description': 'Create an order' },
-          '/v1/payments': { 'method': 'POST', 'description': 'Process payment' }
-        }
-      }
-    },
-    'social': {
-      'Facebook': {
-        'description': 'Social media integration',
-        'endpoints': {
-          '/v1/share': { 'method': 'POST', 'description': 'Share content' },
-          '/v1/user': { 'method': 'GET', 'description': 'Get user profile' }
-        }
-      },
-      'Twitter': {
-        'description': 'Social media API',
-        'endpoints': {
-          '/v1/tweets': { 'method': 'POST', 'description': 'Post a tweet' },
-          '/v1/user': { 'method': 'GET', 'description': 'Get user info' }
-        }
-      }
-    }
-  };
-
-  const content_lower = content.toLowerCase();
-  let selectedApis = {};
-
-  if (content_lower.includes('payment')) {
-    selectedApis = { ...selectedApis, ...apis.payment };
-  }
-  if (content_lower.includes('social')) {
-    selectedApis = { ...selectedApis, ...apis.social };
-  }
-
-  return {
-    openapi: '3.0.0',
-    info: {
-      title: 'Recommended APIs',
-      version: '1.0.0',
-      description: 'API recommendations based on your requirements'
-    },
-    paths: selectedApis
   };
 };

@@ -8,14 +8,11 @@ export const streamChat = async (
   onToken: (token: string) => void
 ): Promise<{ sessionId: string; result: string }> => {
   try {
-    console.log('Sending chat request:', { message, sessionId });
-    
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`,
-        'Accept': 'text/event-stream'
+        'Authorization': `Bearer ${API_KEY}`
       },
       body: JSON.stringify({
         message,
@@ -27,50 +24,20 @@ export const streamChat = async (
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const reader = response.body?.getReader();
-    if (!reader) {
-      throw new Error('Response body is not readable');
+    const data = await response.json();
+    const result = data.output?.response || data.response || '';
+    const newSessionId = data.session_id || sessionId || '';
+
+    // Simulate streaming for non-streaming response
+    const tokens = result.split('');
+    for (const token of tokens) {
+      onToken(token);
+      await new Promise(resolve => setTimeout(resolve, 10)); // Small delay for smoother appearance
     }
 
-    let completeResponse = '';
-    let receivedSessionId = '';
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-
-      const chunk = new TextDecoder().decode(value);
-      console.log('Received chunk:', chunk);
-      
-      const lines = chunk.split('\n');
-
-      for (const line of lines) {
-        if (!line.trim()) continue;
-
-        try {
-          const data = JSON.parse(line);
-          console.log('Parsed data:', data);
-          
-          if (data.session_id && !receivedSessionId) {
-            receivedSessionId = data.session_id;
-            console.log('Received session ID:', receivedSessionId);
-          }
-          
-          if (data.token) {
-            onToken(data.token);
-            completeResponse += data.token;
-          }
-        } catch (e) {
-          console.debug('Error parsing chunk:', e);
-        }
-      }
-    }
-
-    console.log('Stream completed. Final response:', completeResponse);
-    
     return {
-      sessionId: receivedSessionId || sessionId || '',
-      result: completeResponse
+      sessionId: newSessionId,
+      result
     };
   } catch (error) {
     console.error('Error in chat stream:', error);

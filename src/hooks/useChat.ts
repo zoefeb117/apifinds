@@ -34,10 +34,42 @@ export const useChat = (initialPrompt?: string) => {
 
   const extractSchema = (text: string): Schema | null => {
     try {
-      // First try to find a JSON block
-      const jsonBlockMatch = text.match(/```json\n([\s\S]*?)\n```/);
-      if (jsonBlockMatch) {
-        const parsed = JSON.parse(jsonBlockMatch[1].trim());
+      // Try to find a schema section
+      const schemaMatch = text.match(/Schema:([\s\S]*?)(?=\n\n|$)/i);
+      if (schemaMatch) {
+        const schemaText = schemaMatch[1].trim();
+        try {
+          // Try parsing as JSON
+          const parsed = JSON.parse(schemaText);
+          return {
+            id: Date.now().toString(),
+            content: JSON.stringify(parsed, null, 2),
+            version: 1,
+            timestamp: new Date().toISOString()
+          };
+        } catch (e) {
+          // If not valid JSON, create a basic schema structure
+          return {
+            id: Date.now().toString(),
+            content: JSON.stringify({
+              openapi: '3.0.0',
+              info: {
+                title: 'API Schema',
+                version: '1.0.0',
+                description: schemaText
+              },
+              paths: {}
+            }, null, 2),
+            version: 1,
+            timestamp: new Date().toISOString()
+          };
+        }
+      }
+
+      // Try to find any JSON block
+      const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
+      if (jsonMatch) {
+        const parsed = JSON.parse(jsonMatch[1].trim());
         return {
           id: Date.now().toString(),
           content: JSON.stringify(parsed, null, 2),
@@ -46,28 +78,18 @@ export const useChat = (initialPrompt?: string) => {
         };
       }
 
-      // Then try to find any code block that might contain JSON
-      const codeBlockMatch = text.match(/```([\s\S]*?)```/);
-      if (codeBlockMatch) {
-        const content = codeBlockMatch[1].trim();
-        try {
-          const parsed = JSON.parse(content);
-          return {
-            id: Date.now().toString(),
-            content: JSON.stringify(parsed, null, 2),
-            version: 1,
-            timestamp: new Date().toISOString()
-          };
-        } catch (e) {
-          // Not valid JSON, ignore
-        }
-      }
-
-      // Finally, try to parse the entire text as JSON
-      const parsed = JSON.parse(text);
+      // If no schema or JSON found, create a basic schema from the text
       return {
         id: Date.now().toString(),
-        content: JSON.stringify(parsed, null, 2),
+        content: JSON.stringify({
+          openapi: '3.0.0',
+          info: {
+            title: 'API Response',
+            version: '1.0.0',
+            description: text
+          },
+          paths: {}
+        }, null, 2),
         version: 1,
         timestamp: new Date().toISOString()
       };
@@ -128,7 +150,6 @@ export const useChat = (initialPrompt?: string) => {
         // Try to extract schema from accumulated response
         const potentialSchema = extractSchema(accumulatedResponse);
         if (potentialSchema) {
-          console.log('Found schema:', potentialSchema);
           setSchema(potentialSchema);
         }
       };
@@ -136,11 +157,10 @@ export const useChat = (initialPrompt?: string) => {
       const response = await streamChat(content, currentSessionId, handleToken);
       setCurrentSessionId(response.sessionId);
 
-      // One final attempt to extract schema from complete response
+      // Ensure we have a schema at the end
       if (!schema) {
         const finalSchema = extractSchema(response.result);
         if (finalSchema) {
-          console.log('Found final schema:', finalSchema);
           setSchema(finalSchema);
         }
       }

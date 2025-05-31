@@ -25,8 +25,10 @@ export const streamChat = async (
     }
 
     const data = await response.json();
-    const result = data.output?.response || data.response || '';
-    const newSessionId = data.session_id || sessionId || '';
+    
+    // Extract the response from the correct path in the response object
+    const result = data.result?.response || data.output?.response || '';
+    const newSessionId = data.result?.session_id || data.session_id || sessionId || '';
 
     // Simulate streaming for non-streaming response
     const tokens = result.split('');

@@ -32,73 +32,6 @@ export const useChat = (initialPrompt?: string) => {
     initialPromptProcessed.current = false;
   };
 
-  const extractSchema = (text: string): Schema | null => {
-    try {
-      // Try to find a schema section
-      const schemaMatch = text.match(/Schema:([\s\S]*?)(?=\n\n|$)/i);
-      if (schemaMatch) {
-        const schemaText = schemaMatch[1].trim();
-        try {
-          // Try parsing as JSON
-          const parsed = JSON.parse(schemaText);
-          return {
-            id: Date.now().toString(),
-            content: JSON.stringify(parsed, null, 2),
-            version: 1,
-            timestamp: new Date().toISOString()
-          };
-        } catch (e) {
-          // If not valid JSON, create a basic schema structure
-          return {
-            id: Date.now().toString(),
-            content: JSON.stringify({
-              openapi: '3.0.0',
-              info: {
-                title: 'API Schema',
-                version: '1.0.0',
-                description: schemaText
-              },
-              paths: {}
-            }, null, 2),
-            version: 1,
-            timestamp: new Date().toISOString()
-          };
-        }
-      }
-
-      // Try to find any JSON block
-      const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
-      if (jsonMatch) {
-        const parsed = JSON.parse(jsonMatch[1].trim());
-        return {
-          id: Date.now().toString(),
-          content: JSON.stringify(parsed, null, 2),
-          version: 1,
-          timestamp: new Date().toISOString()
-        };
-      }
-
-      // If no schema or JSON found, create a basic schema from the text
-      return {
-        id: Date.now().toString(),
-        content: JSON.stringify({
-          openapi: '3.0.0',
-          info: {
-            title: 'API Response',
-            version: '1.0.0',
-            description: text
-          },
-          paths: {}
-        }, null, 2),
-        version: 1,
-        timestamp: new Date().toISOString()
-      };
-    } catch (e) {
-      console.debug('Failed to extract schema:', e);
-      return null;
-    }
-  };
-
   const sendMessage = async (content: string) => {
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -147,23 +80,25 @@ export const useChat = (initialPrompt?: string) => {
           return [...filtered, systemMessage];
         });
 
-        // Try to extract schema from accumulated response
-        const potentialSchema = extractSchema(accumulatedResponse);
-        if (potentialSchema) {
-          setSchema(potentialSchema);
-        }
+        // Update schema with accumulated response
+        setSchema({
+          id: Date.now().toString(),
+          content: accumulatedResponse,
+          version: 1,
+          timestamp: new Date().toISOString()
+        });
       };
 
       const response = await streamChat(content, currentSessionId, handleToken);
       setCurrentSessionId(response.sessionId);
 
-      // Ensure we have a schema at the end
-      if (!schema) {
-        const finalSchema = extractSchema(response.result);
-        if (finalSchema) {
-          setSchema(finalSchema);
-        }
-      }
+      // Ensure final response is set
+      setSchema({
+        id: Date.now().toString(),
+        content: response.result,
+        version: 1,
+        timestamp: new Date().toISOString()
+      });
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: ChatMessage = {

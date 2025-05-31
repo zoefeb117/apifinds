@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, GitBranch, Download, HelpCircle, Settings } from 'lucide-react';
+import { Sun, Moon, Link, Download, HelpCircle, Settings } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const Header: React.FC = () => {
@@ -9,12 +9,12 @@ const Header: React.FC = () => {
     <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 transition-colors duration-200">
       <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            <GitBranch className="h-5 w-5 text-white" />
+          <div className="h-10 w-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <Link className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-xl tracking-tight">apifinds</h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">Natural Language API Schema Generator</p>
+            <h1 className="font-bold text-xl tracking-tight">Velkros</h1>
+            <p className="text-xs text-gray-600 dark:text-gray-400">Connect Your Apps with Ease</p>
           </div>
         </div>
 

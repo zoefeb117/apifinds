@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../components/ThemeProvider';
-import { GitBranch, Sun, Moon, ArrowRight, Sparkles, Zap, Shield, Globe } from 'lucide-react';
+import { Link as LinkIcon, Sun, Moon, ArrowRight, Sparkles, Zap, Shield, Globe } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -36,12 +36,12 @@ const LandingPage: React.FC = () => {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <GitBranch className="h-5 w-5 text-white" />
+              <div className="h-10 w-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <LinkIcon className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold">apifinds</h1>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Integration Made Simple</p>
+                <h1 className="text-xl font-bold">Velkros</h1>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Connect Your Apps with Ease</p>
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-6">
@@ -65,7 +65,7 @@ const LandingPage: React.FC = () => {
               </button>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg flex items-center space-x-2"
+                className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg flex items-center space-x-2"
               >
                 <span>Open Dashboard</span>
                 <ArrowRight className="h-4 w-4" />
@@ -79,15 +79,15 @@ const LandingPage: React.FC = () => {
         <div className="relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div className="text-center">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 mb-6">
-                Discover the Perfect APIs<br />for Your Project
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 mb-6">
+                Connect Your Apps<br />Like Never Before
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
                 Describe your integration needs in plain language, and we'll recommend the best third-party APIs and services for your application.
               </p>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-lg font-semibold flex items-center space-x-2 mx-auto"
+                className="px-8 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-lg font-semibold flex items-center space-x-2 mx-auto"
               >
                 <span>Start Building</span>
                 <ArrowRight className="h-5 w-5" />
@@ -99,7 +99,7 @@ const LandingPage: React.FC = () => {
         <div className="bg-white dark:bg-gray-800 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">Why Choose apifinds?</h2>
+              <h2 className="text-3xl font-bold mb-4">Why Choose Velkros?</h2>
               <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                 Our intelligent platform helps you find and integrate the right APIs for your project, saving you hours of research and implementation time.
               </p>
@@ -126,11 +126,11 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex items-center space-x-3 md:col-span-4 mb-8">
-              <div className="h-8 w-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <GitBranch className="h-4 w-4 text-white" />
+              <div className="h-8 w-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <LinkIcon className="h-4 w-4 text-white" />
               </div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                © 2025 apifinds. All rights reserved.
+                © 2025 Velkros. All rights reserved.
               </span>
             </div>
             <div>

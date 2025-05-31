@@ -12,7 +12,8 @@ export const streamChat = async (
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': `Bearer ${API_KEY}`,
+        'Accept': 'text/event-stream'
       },
       body: JSON.stringify({
         message,
@@ -36,7 +37,6 @@ export const streamChat = async (
       const { done, value } = await reader.read();
       if (done) break;
 
-      // Convert the Uint8Array to a string
       const chunk = new TextDecoder().decode(value);
       const lines = chunk.split('\n');
 
@@ -53,13 +53,13 @@ export const streamChat = async (
             completeResponse += data.token;
           }
         } catch (e) {
-          console.error('Error parsing chunk:', e);
+          console.debug('Error parsing chunk:', e);
         }
       }
     }
 
     return {
-      sessionId: receivedSessionId,
+      sessionId: receivedSessionId || sessionId || '',
       result: completeResponse
     };
   } catch (error) {

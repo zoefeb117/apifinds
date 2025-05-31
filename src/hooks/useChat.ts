@@ -32,6 +32,37 @@ export const useChat = (initialPrompt?: string) => {
     initialPromptProcessed.current = false;
   };
 
+  const extractSchema = (text: string): Schema | null => {
+    // Try to find JSON content in various formats
+    const patterns = [
+      /```json\n([\s\S]*?)\n```/, // Markdown JSON block
+      /```([\s\S]*?)```/, // Any code block
+      /{[\s\S]*}/ // Raw JSON
+    ];
+
+    for (const pattern of patterns) {
+      const match = text.match(pattern);
+      if (match) {
+        try {
+          const jsonContent = match[1] || match[0];
+          const parsed = JSON.parse(jsonContent.replace(/```/g, '').trim());
+          if (parsed && typeof parsed === 'object') {
+            return {
+              id: Date.now().toString(),
+              content: JSON.stringify(parsed, null, 2),
+              version: 1,
+              timestamp: new Date().toISOString()
+            };
+          }
+        } catch (e) {
+          console.debug('Failed to parse potential schema:', e);
+          continue;
+        }
+      }
+    }
+    return null;
+  };
+
   const sendMessage = async (content: string) => {
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -42,6 +73,7 @@ export const useChat = (initialPrompt?: string) => {
     
     setMessages(prev => [...prev, userMessage]);
     setIsProcessing(true);
+    setSchema(null); // Clear previous schema
     
     if (!currentProjectId) {
       const newProject: Project = {
@@ -65,6 +97,13 @@ export const useChat = (initialPrompt?: string) => {
 
       const handleToken = (token: string) => {
         partialResponse += token;
+        
+        // Try to extract schema from partial response
+        const potentialSchema = extractSchema(partialResponse);
+        if (potentialSchema) {
+          setSchema(potentialSchema);
+        }
+
         const systemMessage: ChatMessage = {
           id: systemMessageId,
           role: 'system',
@@ -80,20 +119,12 @@ export const useChat = (initialPrompt?: string) => {
       const response = await streamChat(content, currentSessionId, handleToken);
       setCurrentSessionId(response.sessionId);
 
-      try {
-        // Try to parse the response as JSON schema
-        const schemaMatch = response.result.match(/```json\n([\s\S]*?)\n```/);
-        if (schemaMatch) {
-          const schemaData = JSON.parse(schemaMatch[1]);
-          setSchema({
-            id: Date.now().toString(),
-            content: JSON.stringify(schemaData, null, 2),
-            version: 1,
-            timestamp: new Date().toISOString()
-          });
+      // Final attempt to extract schema from complete response
+      if (!schema) {
+        const finalSchema = extractSchema(response.result);
+        if (finalSchema) {
+          setSchema(finalSchema);
         }
-      } catch (e) {
-        console.error('Failed to parse schema:', e);
       }
     } catch (error) {
       console.error('Error sending message:', error);

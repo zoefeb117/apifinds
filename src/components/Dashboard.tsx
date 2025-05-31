@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import ChatPanel from './ChatPanel';
@@ -10,6 +11,9 @@ const Dashboard: React.FC = () => {
   const [resizing, setResizing] = useState(false);
   const [splitPosition, setSplitPosition] = useState(40); // percentage
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+  const initialPrompt = location.state?.initialPrompt;
+  
   const { 
     messages, 
     schema, 
@@ -18,7 +22,7 @@ const Dashboard: React.FC = () => {
     projects,
     currentProjectId,
     createNewChat
-  } = useChat();
+  } = useChat(initialPrompt);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setResizing(true);

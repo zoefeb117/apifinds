@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../components/ThemeProvider';
 import { 
   Link as LinkIcon, Sun, Moon, ArrowRight, Sparkles, Zap, 
-  Shield, Globe, Code, MessageSquare, Rocket, Lock
+  Shield, Globe, Code, MessageSquare, Rocket, Lock, Send
 } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const [prompt, setPrompt] = useState('');
 
   const features = [
     {
@@ -32,6 +33,24 @@ const LandingPage: React.FC = () => {
       description: "Support for payment, social media, AI, analytics, and many other API categories."
     }
   ];
+
+  const quickPrompts = [
+    "I need to integrate Stripe payments into my e-commerce app",
+    "Looking for social media authentication options",
+    "Help me find an email marketing API",
+    "Need real-time chat integration suggestions"
+  ];
+
+  const handlePromptSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (prompt.trim()) {
+      navigate('/dashboard', { state: { initialPrompt: prompt } });
+    }
+  };
+
+  const handleQuickPrompt = (quickPrompt: string) => {
+    navigate('/dashboard', { state: { initialPrompt: quickPrompt } });
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
@@ -89,6 +108,39 @@ const LandingPage: React.FC = () => {
               <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
                 Describe your integration needs in plain language, and we'll recommend the best third-party APIs and services for your application.
               </p>
+              
+              {/* Prompt Box */}
+              <div className="max-w-2xl mx-auto mb-8">
+                <form onSubmit={handlePromptSubmit} className="relative">
+                  <input
+                    type="text"
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder="Describe what you want to build..."
+                    className="w-full px-6 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg"
+                  >
+                    <Send className="h-5 w-5" />
+                  </button>
+                </form>
+                
+                {/* Quick Prompts */}
+                <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                  {quickPrompts.map((quickPrompt, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleQuickPrompt(quickPrompt)}
+                      className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 transition-colors"
+                    >
+                      {quickPrompt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={() => navigate('/dashboard')}

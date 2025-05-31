@@ -1,69 +1,113 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { BookOpen, ArrowLeft, Calendar } from 'lucide-react';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+import { BookOpen, Calendar, User, ArrowRight } from 'lucide-react';
 
 const Blog: React.FC = () => {
   const posts = [
     {
       title: 'Getting Started with API Integration',
-      excerpt: 'Learn how to quickly integrate third-party APIs into your application using Velkros.',
+      excerpt: 'Learn how to quickly integrate third-party APIs into your application using Velkros. We\'ll walk through the entire process from API discovery to implementation.',
       date: '2025-03-15',
-      readTime: '5 min read'
+      readTime: '5 min read',
+      author: 'Sarah Chen',
+      category: 'Tutorial',
+      image: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
     },
     {
       title: 'Best Practices for API Security',
-      excerpt: 'Discover the essential security measures you need to implement when working with external APIs.',
+      excerpt: 'Discover the essential security measures you need to implement when working with external APIs. From authentication to data encryption, we cover it all.',
       date: '2025-03-10',
-      readTime: '8 min read'
+      readTime: '8 min read',
+      author: 'Michael Rodriguez',
+      category: 'Security',
+      image: 'https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
     },
     {
       title: 'The Future of API Integration',
-      excerpt: 'Explore upcoming trends and innovations in API integration and how they will shape development.',
+      excerpt: 'Explore upcoming trends and innovations in API integration and how they will shape development. From AI-powered discovery to automated testing.',
       date: '2025-03-05',
-      readTime: '6 min read'
+      readTime: '6 min read',
+      author: 'Emma Thompson',
+      category: 'Industry Trends',
+      image: 'https://images.pexels.com/photos/8728285/pexels-photo-8728285.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link 
-          to="/" 
-          className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 mb-8"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
-        </Link>
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+      <Navigation />
+      
+      <div className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="flex items-center justify-between mb-12">
+            <div className="flex items-center">
+              <BookOpen className="h-8 w-8 text-indigo-500 mr-4" />
+              <h1 className="text-3xl font-bold">Blog</h1>
+            </div>
+            
+            <div className="flex gap-4">
+              <select className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2">
+                <option>All Categories</option>
+                <option>Tutorials</option>
+                <option>Security</option>
+                <option>Industry Trends</option>
+              </select>
+            </div>
+          </div>
 
-        <div className="flex items-center mb-12">
-          <BookOpen className="h-8 w-8 text-indigo-500 mr-4" />
-          <h1 className="text-3xl font-bold">Blog</h1>
-        </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <article key={post.title} className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-500 rounded-full text-xs font-medium">
+                      {post.category}
+                    </span>
+                    <span className="mx-2">•</span>
+                    <time>{post.readTime}</time>
+                  </div>
+                  
+                  <h2 className="text-xl font-bold mb-3 hover:text-indigo-500 cursor-pointer">
+                    {post.title}
+                  </h2>
+                  
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center justify-between mt-6">
+                    <div className="flex items-center">
+                      <User className="h-4 w-4 text-gray-500 mr-2" />
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{post.author}</span>
+                    </div>
+                    
+                    <button className="text-indigo-500 hover:text-indigo-600 font-medium flex items-center">
+                      Read More
+                      <ArrowRight className="h-4 w-4 ml-1" />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
 
-        <div className="space-y-12">
-          {posts.map((post) => (
-            <article key={post.title} className="border-b border-gray-200 dark:border-gray-700 pb-8">
-              <h2 className="text-2xl font-bold mb-4 hover:text-indigo-500 cursor-pointer">
-                {post.title}
-              </h2>
-              <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
-                <Calendar className="h-4 w-4 mr-2" />
-                <time>{post.date}</time>
-                <span className="mx-2">•</span>
-                <span>{post.readTime}</span>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {post.excerpt}
-              </p>
-              <button className="text-indigo-500 hover:text-indigo-600 font-medium">
-                Read More →
-              </button>
-            </article>
-          ))}
+          <div className="mt-12 text-center">
+            <button className="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-medium transition-colors">
+              Load More Posts
+            </button>
+          </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
-}
+};
 
 export default Blog;

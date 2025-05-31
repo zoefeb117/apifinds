@@ -1,7 +1,10 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../components/ThemeProvider';
-import { Link as LinkIcon, Sun, Moon, ArrowRight, Sparkles, Zap, Shield, Globe } from 'lucide-react';
+import { 
+  Link as LinkIcon, Sun, Moon, ArrowRight, Sparkles, Zap, 
+  Shield, Globe, Code, MessageSquare, Rocket, Lock
+} from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -76,6 +79,7 @@ const LandingPage: React.FC = () => {
       </header>
 
       <main>
+        {/* Hero Section */}
         <div className="relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div className="text-center">
@@ -85,18 +89,28 @@ const LandingPage: React.FC = () => {
               <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
                 Describe your integration needs in plain language, and we'll recommend the best third-party APIs and services for your application.
               </p>
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="px-8 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-lg font-semibold flex items-center space-x-2 mx-auto"
-              >
-                <span>Start Building</span>
-                <ArrowRight className="h-5 w-5" />
-              </button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="px-8 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-lg font-semibold flex items-center justify-center space-x-2"
+                >
+                  <span>Start Building</span>
+                  <ArrowRight className="h-5 w-5" />
+                </button>
+                <button
+                  onClick={() => navigate('/docs')}
+                  className="px-8 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg text-lg font-semibold flex items-center justify-center space-x-2"
+                >
+                  <span>View Documentation</span>
+                  <Code className="h-5 w-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 py-24">
+        {/* Features Section */}
+        <div className="bg-white dark:bg-gray-900 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">Why Choose Velkros?</h2>
@@ -108,9 +122,9 @@ const LandingPage: React.FC = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700"
+                  className="p-6 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
                 >
-                  <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-white dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4">
                     {feature.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -118,6 +132,54 @@ const LandingPage: React.FC = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        {/* How It Works */}
+        <div className="bg-gray-50 dark:bg-gray-800 py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold mb-4">How Velkros Works</h2>
+              <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Get started with Velkros in three simple steps
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="relative p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">1</div>
+                <MessageSquare className="h-8 w-8 text-indigo-500 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Describe Your Needs</h3>
+                <p className="text-gray-600 dark:text-gray-400">Tell us what you want to build using natural language</p>
+              </div>
+              <div className="relative p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">2</div>
+                <Rocket className="h-8 w-8 text-indigo-500 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Get Recommendations</h3>
+                <p className="text-gray-600 dark:text-gray-400">Receive personalized API suggestions and integration guides</p>
+              </div>
+              <div className="relative p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">3</div>
+                <Lock className="h-8 w-8 text-indigo-500 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">Integrate Securely</h3>
+                <p className="text-gray-600 dark:text-gray-400">Follow our security-first implementation guides</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Ready to Transform Your API Integration?</h2>
+            <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
+              Start building better applications faster with Velkros.
+            </p>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="px-8 py-4 bg-white text-indigo-600 rounded-lg text-lg font-semibold hover:bg-indigo-50 transition-colors"
+            >
+              Get Started for Free
+            </button>
           </div>
         </div>
       </main>

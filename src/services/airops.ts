@@ -8,6 +8,8 @@ export const streamChat = async (
   onToken: (token: string) => void
 ): Promise<{ sessionId: string; result: string }> => {
   try {
+    console.log('Sending chat request:', { message, sessionId });
+    
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
@@ -38,6 +40,8 @@ export const streamChat = async (
       if (done) break;
 
       const chunk = new TextDecoder().decode(value);
+      console.log('Received chunk:', chunk);
+      
       const lines = chunk.split('\n');
 
       for (const line of lines) {
@@ -45,9 +49,13 @@ export const streamChat = async (
 
         try {
           const data = JSON.parse(line);
+          console.log('Parsed data:', data);
+          
           if (data.session_id && !receivedSessionId) {
             receivedSessionId = data.session_id;
+            console.log('Received session ID:', receivedSessionId);
           }
+          
           if (data.token) {
             onToken(data.token);
             completeResponse += data.token;
@@ -58,6 +66,8 @@ export const streamChat = async (
       }
     }
 
+    console.log('Stream completed. Final response:', completeResponse);
+    
     return {
       sessionId: receivedSessionId || sessionId || '',
       result: completeResponse

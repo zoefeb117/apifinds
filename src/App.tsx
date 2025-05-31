@@ -12,7 +12,7 @@ import Enterprise from './pages/Enterprise';
 import About from './pages/About';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
-import Terms from './pages/Terms';
+import Partners from './pages/Partners';
 import Security from './pages/Security';
 import Compliance from './pages/Compliance';
 import Guides from './pages/Guides';
@@ -35,7 +35,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/terms" element={<Terms />} />
+          <Route path="/partners" element={<Partners />} />
           <Route path="/security" element={<Security />} />
           <Route path="/compliance" element={<Compliance />} />
           <Route path="/guides" element={<Guides />} />

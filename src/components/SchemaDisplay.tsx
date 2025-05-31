@@ -1,6 +1,6 @@
 import React from 'react';
 import { Schema } from '../types';
-import { CodeBracket } from 'lucide-react';
+import { Brackets as CodeBracket } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface SchemaDisplayProps {

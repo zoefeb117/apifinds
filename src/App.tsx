@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './components/ThemeProvider';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './components/Dashboard';
+import Documentation from './pages/Documentation';
+import Pricing from './pages/Pricing';
+import Blog from './pages/Blog';
 import './index.css';
 
 function App() {
@@ -12,6 +15,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/docs" element={<Documentation />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

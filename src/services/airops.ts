@@ -1,80 +1,69 @@
-import AirOps from '@airops/airops-js';
-import HmacSHA256 from 'crypto-js/hmac-sha256';
-import Hex from 'crypto-js/enc-hex';
-
-const WORKSPACE_ID = '20396';
 const AGENT_ID = 'aa3e5660-4e0a-430c-a416-9526d2792f12';
 const API_KEY = 'gd0aNXrb1P99AU0ITfuFsAjfCT2B9bu6B-mtGg5BFpCzBJJdEMHv9DS93oe8';
+const API_URL = `https://api.airops.com/public_api/agent_apps/${AGENT_ID}/chat`;
 
-// Generate a unique user ID for the session
-const USER_ID = `user_${Math.random().toString(36).substring(2)}`;
-
-// Hash the user ID using the API key
-const hashUserId = (userId: string) => {
-  const hash = HmacSHA256(userId, API_KEY);
-  return hash.toString(Hex);
-};
-
-const HASHED_USER_ID = hashUserId(USER_ID);
-
-// Initialize AirOps SDK
-const airops = new AirOps();
-
-export const initializeChat = async (message: string, onToken: (token: string) => void) => {
-  try {
-    const response = await airops.apps.chatStream({
-      appId: AGENT_ID,
-      message,
-      inputs: {},
-      streamCallback: ({ action, ...data }) => {
-        if (action === 'agent-response' && 'token' in data) {
-          onToken(data.token);
-        }
-      },
-      streamCompletedCallback: (data) => {
-        console.log('Chat completed:', data);
-      }
-    });
-
-    const result = await response.result();
-    return {
-      sessionId: response.sessionId,
-      result: result.result
-    };
-  } catch (error) {
-    console.error('Error in chat:', error);
-    throw error;
-  }
-};
-
-export const continueChatSession = async (
-  message: string, 
-  sessionId: string,
+export const streamChat = async (
+  message: string,
+  sessionId: string | null,
   onToken: (token: string) => void
-) => {
+): Promise<{ sessionId: string; result: string }> => {
   try {
-    const response = await airops.apps.chatStream({
-      appId: AGENT_ID,
-      message,
-      sessionId,
-      inputs: {},
-      streamCallback: ({ action, ...data }) => {
-        if (action === 'agent-response' && 'token' in data) {
-          onToken(data.token);
-        }
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
       },
-      streamCompletedCallback: (data) => {
-        console.log('Chat completed:', data);
-      }
+      body: JSON.stringify({
+        message,
+        ...(sessionId && { session_id: sessionId })
+      })
     });
 
-    const result = await response.result();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const reader = response.body?.getReader();
+    if (!reader) {
+      throw new Error('Response body is not readable');
+    }
+
+    let completeResponse = '';
+    let receivedSessionId = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      // Convert the Uint8Array to a string
+      const chunk = new TextDecoder().decode(value);
+      const lines = chunk.split('\n');
+
+      for (const line of lines) {
+        if (!line.trim()) continue;
+
+        try {
+          const data = JSON.parse(line);
+          if (data.session_id && !receivedSessionId) {
+            receivedSessionId = data.session_id;
+          }
+          if (data.token) {
+            onToken(data.token);
+            completeResponse += data.token;
+          }
+        } catch (e) {
+          console.error('Error parsing chunk:', e);
+        }
+      }
+    }
+
     return {
-      sessionId: response.sessionId,
-      result: result.result
+      sessionId: receivedSessionId,
+      result: completeResponse
     };
   } catch (error) {
-    console.error('Error in chat:', error);
+    console.error('Error in chat stream:', error);
     throw error;
   }
 };

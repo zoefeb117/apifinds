@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChatMessage, Schema, Project } from '../types';
-import { initializeChat, continueChatSession } from '../services/airops';
+import { streamChat } from '../services/airops';
 
 export const useChat = (initialPrompt?: string) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -60,39 +60,38 @@ export const useChat = (initialPrompt?: string) => {
     }
 
     try {
-      let response;
       let partialResponse = '';
+      const systemMessageId = Date.now().toString();
 
       const handleToken = (token: string) => {
         partialResponse += token;
         const systemMessage: ChatMessage = {
-          id: Date.now().toString(),
+          id: systemMessageId,
           role: 'system',
           content: partialResponse,
           timestamp: new Date().toISOString()
         };
         setMessages(prev => {
-          const filtered = prev.filter(msg => msg.role !== 'system' || msg.id !== systemMessage.id);
+          const filtered = prev.filter(msg => msg.id !== systemMessageId);
           return [...filtered, systemMessage];
         });
       };
 
-      if (currentSessionId) {
-        response = await continueChatSession(content, currentSessionId, handleToken);
-      } else {
-        response = await initializeChat(content, handleToken);
-      }
-
+      const response = await streamChat(content, currentSessionId, handleToken);
       setCurrentSessionId(response.sessionId);
 
       try {
-        const schemaData = JSON.parse(response.result);
-        setSchema({
-          id: Date.now().toString(),
-          content: JSON.stringify(schemaData),
-          version: 1,
-          timestamp: new Date().toISOString()
-        });
+        // Try to parse the response as JSON schema
+        const schemaMatch = response.result.match(/```json\n([\s\S]*?)\n```/);
+        if (schemaMatch) {
+          const schemaData = JSON.parse(schemaMatch[1]);
+          setSchema({
+            id: Date.now().toString(),
+            content: JSON.stringify(schemaData, null, 2),
+            version: 1,
+            timestamp: new Date().toISOString()
+          });
+        }
       } catch (e) {
         console.error('Failed to parse schema:', e);
       }

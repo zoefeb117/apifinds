@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChatMessage, Schema, Project } from '../types';
 
 export const useChat = (initialPrompt?: string) => {
@@ -7,13 +7,15 @@ export const useChat = (initialPrompt?: string) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const initialPromptProcessed = useRef(false);
 
   // Handle initial prompt when component mounts
   useEffect(() => {
-    if (initialPrompt) {
+    if (initialPrompt && !initialPromptProcessed.current) {
+      initialPromptProcessed.current = true;
       sendMessage(initialPrompt);
     }
-  }, []);
+  }, [initialPrompt]);
 
   const createNewChat = () => {
     const newProject: Project = {
@@ -25,6 +27,7 @@ export const useChat = (initialPrompt?: string) => {
     setCurrentProjectId(newProject.id);
     setMessages([]);
     setSchema(null);
+    initialPromptProcessed.current = false;
   };
 
   const sendMessage = (content: string) => {

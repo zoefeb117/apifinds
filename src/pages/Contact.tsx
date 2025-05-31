@@ -1,13 +1,10 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { Mail, MessageSquare, Phone, MapPin } from 'lucide-react';
 
 const Contact: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
-      <Navigation />
-      
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">      
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center mb-16">

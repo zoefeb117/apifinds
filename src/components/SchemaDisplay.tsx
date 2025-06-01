@@ -18,19 +18,23 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
             remarkPlugins={[remarkGfm]}
             components={{
               code({ node, inline, className, children, ...props }) {
-                // 1) If it's inline (single backtick), render a light-gray <code>
+                // 1) Always catch inline code first (single backticks):
+                //    Render it with a light-gray background in both light/dark modes.
                 if (inline) {
                   return (
-                    <code className="bg-gray-100 dark:bg-gray-700 rounded px-1 py-0.5 text-gray-900 dark:text-gray-100" {...props}>
+                    <code
+                      className="bg-gray-100 dark:bg-gray-700 rounded px-1 py-0.5 text-gray-900 dark:text-gray-100"
+                      {...props}
+                    >
                       {children}
                     </code>
                   );
                 }
 
-                // 2) Attempt to detect "language-xyz" from className
+                // 2) Now we know it's a *fenced* block (triple backticks). Check for a "language-xyz" class.
                 const match = /language-([\w-]+)/.exec(className || '');
 
-                // 2a) Fenced code with an explicit language → show label and highlight
+                // 2a) If there is a language tag (```js, ```python, etc.), highlight it and show the label.
                 if (match) {
                   const lang = match[1];
                   return (
@@ -55,11 +59,13 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                   );
                 }
 
-                // 2b) Fenced code WITHOUT a language → just render a dark block, no "bash" label
+                // 2b) If there is NO language tag (``` with no "language-xyz"), render a dark block
+                //     but do NOT show any "bash" label. This matches your screenshot style.
                 return (
                   <div className="relative rounded-lg overflow-hidden my-4">
                     <SyntaxHighlighter
                       style={oneDark}
+                      // passing null or an empty string means "no explicit highlight language"
                       language={null}
                       PreTag="div"
                       customStyle={{
@@ -75,9 +81,16 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                 );
               },
 
-              h1: ({ children }) => <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>,
-              h2: ({ children }) => <h2 className="text-2xl font-bold mb-3 mt-5">{children}</h2>,
-              h3: ({ children }) => <h3 className="text-xl font-bold mb-2 mt-4">{children}</h3>,
+              // ─── OTHER MARKDOWN ELEMENTS ─────────────────────────────────────────────
+              h1: ({ children }) => (
+                <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>
+              ),
+              h2: ({ children }) => (
+                <h2 className="text-2xl font-bold mb-3 mt-5">{children}</h2>
+              ),
+              h3: ({ children }) => (
+                <h3 className="text-xl font-bold mb-2 mt-4">{children}</h3>
+              ),
               p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
               ul: ({ children }) => <ul className="list-disc pl-6 mb-4">{children}</ul>,
               ol: ({ children }) => <ol className="list-decimal pl-6 mb-4">{children}</ol>,

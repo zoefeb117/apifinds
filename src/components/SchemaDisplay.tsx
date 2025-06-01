@@ -59,7 +59,7 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                     </SyntaxHighlighter>
                   </div>
                 ) : (
-                  <code className="bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5" {...props}>
+                  <code className={`${inline ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100' : ''} rounded px-1 py-0.5`} {...props}>
                     {children}
                   </code>
                 );

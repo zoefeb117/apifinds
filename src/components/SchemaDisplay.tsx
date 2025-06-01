@@ -18,12 +18,13 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
             remarkPlugins={[remarkGfm]}
             components={{
               code({ node, inline, className, children, ...props }) {
-                // 1) Always catch inline code first (single backticks):
-                //    Render it with a light-gray background in both light/dark modes.
+                // ───────────────────────────────────────────────────────────────────────────
+                // 1) If `inline === true`, it is a single‐backtick snippet.
+                //    Return exactly the old light‐gray/dark‐gray <code> styling:
                 if (inline) {
                   return (
                     <code
-                      className="bg-gray-100 dark:bg-gray-700 rounded px-1 py-0.5 text-gray-900 dark:text-gray-100"
+                      className="bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5 text-gray-900 dark:text-gray-100"
                       {...props}
                     >
                       {children}
@@ -31,10 +32,13 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                   );
                 }
 
-                // 2) Now we know it's a *fenced* block (triple backticks). Check for a "language-xyz" class.
+                // ───────────────────────────────────────────────────────────────────────────
+                // 2) At this point, we know `inline === false`, so it’s a fenced block.
+                //    Try to find a "language-xyz" class name:
                 const match = /language-([\w-]+)/.exec(className || '');
 
-                // 2a) If there is a language tag (```js, ```python, etc.), highlight it and show the label.
+                // 2a) If match !== null, it's a fenced block with an explicit language.
+                //     Render the SyntaxHighlighter with a label (same as your old version):
                 if (match) {
                   const lang = match[1];
                   return (
@@ -59,13 +63,13 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                   );
                 }
 
-                // 2b) If there is NO language tag (``` with no "language-xyz"), render a dark block
-                //     but do NOT show any "bash" label. This matches your screenshot style.
+                // 2b) If match === null, it’s a fenced block **without** a language tag.
+                //     Now we want it to be a dark block (SyntaxHighlighter) **with no label**:
                 return (
                   <div className="relative rounded-lg overflow-hidden my-4">
                     <SyntaxHighlighter
                       style={oneDark}
-                      // passing null or an empty string means "no explicit highlight language"
+                      // Passing `language={null}` means “no explicit language”
                       language={null}
                       PreTag="div"
                       customStyle={{
@@ -81,7 +85,8 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                 );
               },
 
-              // ─── OTHER MARKDOWN ELEMENTS ─────────────────────────────────────────────
+              // ───────────────────────────────────────────────────────────────────────────
+              // (Other Markdown elements remain unchanged)
               h1: ({ children }) => (
                 <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>
               ),

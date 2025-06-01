@@ -38,13 +38,32 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                       {String(children).replace(/\n$/, '')}
                     </SyntaxHighlighter>
                   </div>
+                ) : !inline ? (
+                  // Default to bash for code blocks without a specified language
+                  <div className="relative rounded-lg overflow-hidden my-4">
+                    <div className="absolute top-0 right-0 px-4 py-1 text-xs font-medium text-gray-400 dark:text-gray-500 bg-gray-800 dark:bg-gray-900 rounded-bl-lg">
+                      bash
+                    </div>
+                    <SyntaxHighlighter
+                      style={oneDark}
+                      language="bash"
+                      PreTag="div"
+                      customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        borderRadius: '0.5rem',
+                      }}
+                      {...props}
+                    >
+                      {String(children).replace(/\n$/, '')}
+                    </SyntaxHighlighter>
+                  </div>
                 ) : (
                   <code className="bg-gray-100 dark:bg-gray-800 rounded px-1 py-0.5" {...props}>
                     {children}
                   </code>
                 );
               },
-              // Enhance other markdown elements
               h1: ({children}) => <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>,
               h2: ({children}) => <h2 className="text-2xl font-bold mb-3 mt-5">{children}</h2>,
               h3: ({children}) => <h3 className="text-xl font-bold mb-2 mt-4">{children}</h3>,

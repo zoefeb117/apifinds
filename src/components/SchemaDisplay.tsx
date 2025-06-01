@@ -19,15 +19,14 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
             components={{
               code({node, inline, className, children, ...props}) {
                 const match = /language-(\w+)/.exec(className || '');
-                const language = match ? match[1] : 'text';
-                return !inline ? (
+                return !inline && match ? (
                   <div className="relative rounded-lg overflow-hidden my-4">
                     <div className="absolute top-0 right-0 px-4 py-1 text-xs font-medium text-gray-400 dark:text-gray-500 bg-gray-800 dark:bg-gray-900 rounded-bl-lg">
-                      {language}
+                      {match[1]}
                     </div>
                     <SyntaxHighlighter
                       style={oneDark}
-                      language={language}
+                      language={match[1]}
                       PreTag="div"
                       customStyle={{
                         margin: 0,
@@ -45,6 +44,7 @@ const SchemaDisplay: React.FC<SchemaDisplayProps> = ({ schema }) => {
                   </code>
                 );
               },
+              // Enhance other markdown elements
               h1: ({children}) => <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>,
               h2: ({children}) => <h2 className="text-2xl font-bold mb-3 mt-5">{children}</h2>,
               h3: ({children}) => <h3 className="text-xl font-bold mb-2 mt-4">{children}</h3>,

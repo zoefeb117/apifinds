@@ -36,9 +36,9 @@ const LandingPage: React.FC = () => {
 
   const quickPrompts = [
     "I need to integrate Stripe payments into my e-commerce app",
-    "Looking for social media authentication options",
-    "Help me find an email marketing API",
-    "Need real-time chat integration suggestions"
+    "Fetch recent posts from my Facebook page",
+    "Authenticate users via Instagram login",
+    "Retrieve current weather for my city"
   ];
 
   const handlePromptSubmit = (e: React.FormEvent) => {

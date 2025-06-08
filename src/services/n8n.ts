@@ -3,7 +3,6 @@ const N8N_WEBHOOK_URL = 'https://butterflowy.app.n8n.cloud/webhook/2ee1be6b-87e7
 export const streamChat = async (
   message: string,
   sessionId: string | null,
-  onToken: (token: string) => void,
   currentOutput?: string
 ): Promise<{ sessionId: string; result: string }> => {
   try {
@@ -31,9 +30,6 @@ export const streamChat = async (
     // Extract the response - adjust this based on your n8n workflow output structure
     const result = data.response || data.output || data.result || '';
     const newSessionId = data.sessionId || sessionId || Date.now().toString();
-
-    // Send the complete result at once instead of streaming
-    onToken(result);
 
     return {
       sessionId: newSessionId,

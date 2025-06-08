@@ -60,27 +60,13 @@ export const useChat = (initialPrompt?: string) => {
       ));
     }
 
-    let accumulatedResponse = '';
-
     try {
-      const handleToken = (token: string) => {
-        accumulatedResponse += token;
-        
-        // Update schema with accumulated response
-        setSchema({
-          id: Date.now().toString(),
-          content: accumulatedResponse,
-          version: 1,
-          timestamp: new Date().toISOString()
-        });
-      };
-
       // Pass current output content to the n8n workflow
       const currentOutput = schema?.content || '';
-      const response = await streamChat(content, currentSessionId, handleToken, currentOutput);
+      const response = await streamChat(content, currentSessionId, currentOutput);
       setCurrentSessionId(response.sessionId);
 
-      // Ensure final response is set
+      // Set the complete response
       setSchema({
         id: Date.now().toString(),
         content: response.result,

@@ -1,4 +1,4 @@
-const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/2ee1be6b-87e7-4032-bf18-0e93ddc703a4';
+const N8N_WEBHOOK_URL = 'https://butterflowy.app.n8n.cloud/webhook/2ee1be6b-87e7-4032-bf18-0e93ddc703a4';
 
 export const streamChat = async (
   message: string,

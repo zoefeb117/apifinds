@@ -39,11 +39,11 @@ export const useChat = (initialPrompt?: string) => {
       content,
       timestamp: new Date().toISOString()
     };
-    
     setMessages(prev => [...prev, userMessage]);
     setIsProcessing(true);
-    setSchema(null); // Clear previous schema
-    
+    setSchema(null);
+
+    // update project list/timestamps
     if (!currentProjectId) {
       const newProject: Project = {
         id: Date.now().toString(),
@@ -53,28 +53,31 @@ export const useChat = (initialPrompt?: string) => {
       setProjects(prev => [newProject, ...prev]);
       setCurrentProjectId(newProject.id);
     } else {
-      setProjects(prev => prev.map(project => 
-        project.id === currentProjectId 
-          ? { ...project, lastUpdated: new Date().toISOString() }
-          : project
-      ));
+      setProjects(prev =>
+        prev.map(p =>
+          p.id === currentProjectId
+            ? { ...p, lastUpdated: new Date().toISOString() }
+            : p
+        )
+      );
     }
 
     try {
-      // Pass current output content to the n8n workflow
-      const currentOutput = schema?.content || '';
-      const response = await streamChat(content, currentSessionId, currentOutput);
+      // pass whatever's currently rendered in the right-panel as `output`
+      const response = await streamChat(
+        content,
+        currentSessionId,
+        schema?.content ?? ''
+      );
       setCurrentSessionId(response.sessionId);
-
-      // Set the complete response
       setSchema({
         id: Date.now().toString(),
         content: response.result,
         version: 1,
         timestamp: new Date().toISOString()
       });
-    } catch (error) {
-      console.error('Error sending message:', error);
+    } catch (err) {
+      console.error(err);
       setSchema({
         id: Date.now().toString(),
         content: 'Sorry, there was an error processing your request.',

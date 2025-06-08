@@ -32,12 +32,8 @@ export const streamChat = async (
     const result = data.response || data.output || data.result || '';
     const newSessionId = data.sessionId || sessionId || Date.now().toString();
 
-    // Simulate streaming for non-streaming response
-    const tokens = result.split('');
-    for (const token of tokens) {
-      onToken(token);
-      await new Promise(resolve => setTimeout(resolve, 10)); // Small delay for smoother appearance
-    }
+    // Send the complete result at once instead of streaming
+    onToken(result);
 
     return {
       sessionId: newSessionId,

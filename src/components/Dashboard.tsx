@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="flex flex-col h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <Header />
       
       <div className="flex-1 flex overflow-hidden relative">
@@ -89,13 +89,13 @@ const Dashboard: React.FC = () => {
           </div>
           
           <div
-            className={`w-1 bg-border hover:bg-primary/50 cursor-col-resize relative z-10 transition-colors duration-200 ${
-              resizing ? 'bg-primary' : ''
+            className={`w-1 bg-gray-200 dark:bg-gray-700 hover:bg-blue-400 dark:hover:bg-blue-500 cursor-col-resize relative z-10 ${
+              resizing ? 'bg-blue-400 dark:bg-blue-500' : ''
             }`}
             onMouseDown={handleMouseDown}
           >
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-10 flex items-center justify-center">
-              <div className="w-1 h-6 bg-muted-foreground rounded-full"></div>
+              <div className="w-1 h-6 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
             </div>
           </div>
           

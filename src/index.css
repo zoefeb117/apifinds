@@ -1,82 +1,71 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #fefefe;
-  --foreground: #0a0a0a;
+  --background: #ffffff;
+  --foreground: #1f2937;
   --card: #ffffff;
-  --card-foreground: #0a0a0a;
+  --card-foreground: #1f2937;
   --popover: #ffffff;
-  --popover-foreground: #0a0a0a;
-  --primary: #2563eb;
+  --popover-foreground: #1f2937;
+  --primary: #3b7ef6;
   --primary-foreground: #ffffff;
-  --secondary: #6366f1;
+  --secondary: #7c3aed;
   --secondary-foreground: #ffffff;
-  --accent: #8b5cf6;
+  --accent: #0ea5e9;
   --accent-foreground: #ffffff;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #f1f5f9;
-  --ring: #2563eb;
-  --radius: 0.75rem;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #3b7ef6;
+  --radius: 0.5rem;
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
-  --card: #111111;
-  --card-foreground: #fafafa;
-  --popover: #111111;
-  --popover-foreground: #fafafa;
-  --primary: #3b82f6;
+  --background: #111827;
+  --foreground: #f9fafb;
+  --card: #1f2937;
+  --card-foreground: #f9fafb;
+  --popover: #1f2937;
+  --popover-foreground: #f9fafb;
+  --primary: #3b7ef6;
   --primary-foreground: #ffffff;
-  --secondary: #6366f1;
+  --secondary: #7c3aed;
   --secondary-foreground: #ffffff;
-  --accent: #8b5cf6;
+  --accent: #0ea5e9;
   --accent-foreground: #ffffff;
-  --muted: #1a1a1a;
-  --muted-foreground: #a1a1aa;
+  --muted: #374151;
+  --muted-foreground: #9ca3af;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #262626;
-  --input: #1a1a1a;
-  --ring: #3b82f6;
+  --border: #374151;
+  --input: #374151;
+  --ring: #3b7ef6;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
     margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.01em;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    letter-spacing: -0.025em;
   }
 }
 
 pre, code {
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -84,43 +73,26 @@ pre, code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 163, 184, 0.3);
-  border-radius: 3px;
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(148, 163, 184, 0.5);
+  background-color: rgba(156, 163, 175, 0.7);
 }
 
+/* Dark mode scrollbar */
 .dark ::-webkit-scrollbar-thumb {
-  background-color: rgba(71, 85, 105, 0.3);
+  background-color: rgba(75, 85, 99, 0.5);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(71, 85, 105, 0.5);
+  background-color: rgba(75, 85, 99, 0.7);
 }
 
-/* Smooth transitions */
+/* Transitions for theme */
 * {
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
-}
-
-/* Glass effect utility */
-.glass {
-  backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-.dark .glass {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-/* Gradient text utility */
-.gradient-text {
-  background: linear-gradient(135deg, #2563eb 0%, #6366f1 50%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }

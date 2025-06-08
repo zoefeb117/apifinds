@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Schema } from '../types';
-import { Brackets as CodeBracket, Copy, Check, Download, Maximize2, Minimize2 } from 'lucide-react';
+import { Code, Copy, Check, Download, Maximize2, Minimize2 } from 'lucide-react';
 import SchemaDisplay from './SchemaDisplay';
 
 interface OutputPanelProps {
@@ -39,25 +39,35 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ schema, isProcessing }) => {
   };
 
   return (
-    <div className={`flex flex-col h-full transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-50 bg-white dark:bg-gray-900' : ''}`}>
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
-        <h2 className="text-lg font-semibold flex items-center gap-2">
-          <CodeBracket className="h-5 w-5 text-blue-500" />
+    <div className={`flex flex-col h-full transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-50 bg-background' : ''}`}>
+      <div className="p-6 border-b border-border bg-card/50 flex justify-between items-center">
+        <h2 className="text-lg font-semibold flex items-center gap-3">
+          <div className="p-2 bg-primary/10 rounded-xl">
+            <Code className="h-5 w-5 text-primary" />
+          </div>
           API Schema Output
         </h2>
         
         <div className="flex space-x-2">
           <button 
-            className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!schema ? 'text-gray-400 dark:text-gray-600 cursor-not-allowed' : ''}`}
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
+              !schema 
+                ? 'text-muted-foreground cursor-not-allowed' 
+                : 'hover:bg-muted text-foreground'
+            }`}
             onClick={handleCopy}
             disabled={!schema}
             title="Copy to clipboard"
           >
-            {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+            {copied ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
           </button>
           
           <button 
-            className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!schema ? 'text-gray-400 dark:text-gray-600 cursor-not-allowed' : ''}`}
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
+              !schema 
+                ? 'text-muted-foreground cursor-not-allowed' 
+                : 'hover:bg-muted text-foreground'
+            }`}
             onClick={handleDownload}
             disabled={!schema}
             title="Download schema"
@@ -66,7 +76,11 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ schema, isProcessing }) => {
           </button>
           
           <button 
-            className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${!schema ? 'text-gray-400 dark:text-gray-600 cursor-not-allowed' : ''}`}
+            className={`p-2.5 rounded-xl transition-all duration-200 ${
+              !schema 
+                ? 'text-muted-foreground cursor-not-allowed' 
+                : 'hover:bg-muted text-foreground'
+            }`}
             onClick={toggleFullscreen}
             disabled={!schema}
             title={isFullscreen ? "Exit fullscreen" : "Fullscreen mode"}
@@ -76,24 +90,24 @@ const OutputPanel: React.FC<OutputPanelProps> = ({ schema, isProcessing }) => {
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-6">
         {isProcessing && !schema && (
           <div className="h-full flex flex-col items-center justify-center">
-            <div className="relative w-16 h-16">
-              <div className="absolute top-0 left-0 w-full h-full border-4 border-blue-200 dark:border-blue-900 rounded-full"></div>
-              <div className="absolute top-0 left-0 w-full h-full border-4 border-transparent border-t-blue-500 rounded-full animate-spin"></div>
+            <div className="relative w-16 h-16 mb-6">
+              <div className="absolute top-0 left-0 w-full h-full border-4 border-muted rounded-full"></div>
+              <div className="absolute top-0 left-0 w-full h-full border-4 border-transparent border-t-primary rounded-full animate-spin"></div>
             </div>
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Generating your API schema...</p>
+            <p className="text-muted-foreground font-medium">Generating your API schema...</p>
           </div>
         )}
         
         {!isProcessing && !schema && (
-          <div className="h-full flex flex-col items-center justify-center text-center p-6">
-            <div className="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
-              <CodeBracket className="h-8 w-8 text-gray-400 dark:text-gray-600" />
+          <div className="h-full flex flex-col items-center justify-center text-center p-8">
+            <div className="w-20 h-20 rounded-2xl bg-muted/50 flex items-center justify-center mb-6">
+              <Code className="h-10 w-10 text-muted-foreground" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">No Schema Generated Yet</h3>
-            <p className="text-gray-600 dark:text-gray-400 max-w-md">
+            <h3 className="text-2xl font-semibold mb-3 tracking-tight">No Schema Generated Yet</h3>
+            <p className="text-muted-foreground max-w-md leading-relaxed">
               Describe your API needs in the prompt box on the left, and your generated schema will appear here.
             </p>
           </div>

@@ -21,13 +21,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <div 
-      className={`fixed top-[61px] left-0 h-[calc(100vh-61px)] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-20 ${
+      className={`fixed top-[73px] left-0 h-[calc(100vh-73px)] bg-card border-r border-border transition-all duration-300 z-20 ${
         isOpen ? 'w-64' : 'w-0'
       }`}
     >
       <button
         onClick={onToggle}
-        className="absolute -right-10 top-4 p-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm"
+        className="absolute -right-10 top-4 p-2.5 bg-card border border-border rounded-xl shadow-sm hover:bg-muted transition-colors duration-200"
         aria-label={isOpen ? 'Close sidebar' : 'Open sidebar'}
       >
         {isOpen ? (
@@ -38,33 +38,39 @@ const Sidebar: React.FC<SidebarProps> = ({
       </button>
 
       {isOpen && (
-        <div className="p-4">
+        <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-semibold">Projects</h2>
+            <h2 className="text-lg font-semibold tracking-tight">Projects</h2>
             <button 
               onClick={onNewChat}
-              className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 bg-gray-100 dark:bg-gray-700 rounded-lg"
+              className="p-2 text-muted-foreground hover:text-foreground bg-muted hover:bg-muted/80 rounded-xl transition-all duration-200"
               aria-label="New project"
             >
               <Plus className="h-4 w-4" />
             </button>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             {projects.map((project) => (
               <button
                 key={project.id}
                 onClick={() => onSelectProject(project.id)}
-                className={`w-full p-3 flex items-center space-x-3 rounded-lg transition-colors text-left ${
+                className={`w-full p-4 flex items-center space-x-3 rounded-xl transition-all duration-200 text-left group ${
                   currentProjectId === project.id
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                    : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-primary/10 text-primary border border-primary/20'
+                    : 'hover:bg-muted border border-transparent'
                 }`}
               >
-                <MessageSquare className="h-4 w-4 text-gray-500" />
+                <div className={`p-2 rounded-lg ${
+                  currentProjectId === project.id 
+                    ? 'bg-primary/20' 
+                    : 'bg-muted group-hover:bg-muted/80'
+                }`}>
+                  <MessageSquare className="h-4 w-4" />
+                </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{project.name}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="text-xs text-muted-foreground">
                     Updated {new Date(project.lastUpdated).toLocaleDateString()}
                   </p>
                 </div>

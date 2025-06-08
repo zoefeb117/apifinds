@@ -1,56 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sun, Moon, Link as LinkIcon, Download, HelpCircle, Settings } from 'lucide-react';
+import { Sun, Moon, Download, HelpCircle, Settings } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 transition-colors duration-200">
+    <header className="border-b border-border bg-background/80 backdrop-blur-md">
       <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2 group">
-          <div className="h-10 w-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:from-indigo-600 group-hover:to-purple-700 transition-all">
-            <LinkIcon className="h-5 w-5 text-white" />
+        <Link to="/" className="flex items-center space-x-3 group">
+          <div className="relative">
+            <div className="h-9 w-9 bg-gradient-to-br from-primary via-secondary to-accent rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/30 transition-all duration-300">
+              <div className="h-4 w-4 bg-white rounded-sm"></div>
+            </div>
           </div>
           <div>
-            <h1 className="font-bold text-xl tracking-tight group-hover:text-indigo-500 transition-colors">Velkros</h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">Connect Your Apps with Ease</p>
+            <h1 className="text-xl font-semibold tracking-tight gradient-text">Velkros</h1>
+            <p className="text-xs text-muted-foreground font-medium">Connect Your Apps</p>
           </div>
         </Link>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2.5 rounded-xl hover:bg-muted transition-colors duration-200"
             aria-label="Download schema"
             title="Download schema"
           >
-            <Download className="h-5 w-5" />
+            <Download className="h-4 w-4" />
           </button>
           
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2.5 rounded-xl hover:bg-muted transition-colors duration-200"
             aria-label="Settings"
             title="Settings"
           >
-            <Settings className="h-5 w-5" />
+            <Settings className="h-4 w-4" />
           </button>
           
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2.5 rounded-xl hover:bg-muted transition-colors duration-200"
             aria-label="Help"
             title="Help"
           >
-            <HelpCircle className="h-5 w-5" />
+            <HelpCircle className="h-4 w-4" />
           </button>
           
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2.5 rounded-xl hover:bg-muted transition-colors duration-200"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+            {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </button>
         </div>
       </div>

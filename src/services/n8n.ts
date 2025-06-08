@@ -7,18 +7,19 @@ export const streamChat = async (
   currentOutput?: string
 ): Promise<{ sessionId: string; result: string }> => {
   try {
-    // Prepare query parameters
-    const params = new URLSearchParams({
+    // Prepare request body as JSON
+    const requestBody = {
       prompt: message,
       currentOutput: currentOutput || '',
       ...(sessionId && { sessionId })
-    });
+    };
 
-    const response = await fetch(`${N8N_WEBHOOK_URL}?${params}`, {
-      method: 'GET',
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(requestBody)
     });
 
     if (!response.ok) {

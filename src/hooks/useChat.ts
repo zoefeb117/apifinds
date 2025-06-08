@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChatMessage, Schema, Project } from '../types';
-import { streamChat } from '../services/airops';
+import { streamChat } from '../services/n8n';
 
 export const useChat = (initialPrompt?: string) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -75,7 +75,9 @@ export const useChat = (initialPrompt?: string) => {
         });
       };
 
-      const response = await streamChat(content, currentSessionId, handleToken);
+      // Pass current output content to the n8n workflow
+      const currentOutput = schema?.content || '';
+      const response = await streamChat(content, currentSessionId, handleToken, currentOutput);
       setCurrentSessionId(response.sessionId);
 
       // Ensure final response is set

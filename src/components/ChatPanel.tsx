@@ -62,10 +62,10 @@ const ChatPanel: React.FC<ChatPanelProps> = ({
   };
 
   const examplePrompts = [
-    "I'm building an e-commerce platform and need payment processing integration",
-    "My app needs social media authentication and sharing features",
-    "I want to add AI-powered chat functionality to my application",
-    "Looking to integrate email marketing services into my platform"
+    "I need to integrate Stripe payments into my e-commerce app",
+    "Fetch recent posts from my Facebook page",
+    "Authenticate users via Instagram login",
+    "Retrieve current weather for my city"
   ];
 
   return (

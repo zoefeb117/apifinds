@@ -35,6 +35,16 @@ const Navigation: React.FC = () => {
             >
               Documentation
             </Link>
+            <Link
+              to="/roadmap"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === '/roadmap'
+                  ? 'text-black dark:text-white'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
+              }`}
+            >
+              Roadmap
+            </Link>
             <a
               href="https://www.velkros.com/blog"
               target="_blank"

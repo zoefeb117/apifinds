@@ -21,13 +21,13 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   return (
     <div 
-      className={`fixed top-[61px] left-0 h-[calc(100vh-61px)] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 z-20 ${
+      className={`fixed top-[61px] left-0 h-[calc(100vh-61px)] bg-white dark:bg-black border-r border-gray-200 dark:border-gray-800 transition-all duration-300 z-20 ${
         isOpen ? 'w-64' : 'w-0'
       }`}
     >
       <button
         onClick={onToggle}
-        className="absolute -right-10 top-4 p-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm"
+        className="absolute -right-10 top-4 p-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm"
         aria-label={isOpen ? 'Close sidebar' : 'Open sidebar'}
       >
         {isOpen ? (
@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <h2 className="text-lg font-semibold">Projects</h2>
             <button 
               onClick={onNewChat}
-              className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 bg-gray-100 dark:bg-gray-700 rounded-lg"
+              className="p-1.5 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white bg-gray-100 dark:bg-gray-900 rounded-lg"
               aria-label="New project"
             >
               <Plus className="h-4 w-4" />
@@ -57,8 +57,8 @@ const Sidebar: React.FC<SidebarProps> = ({
                 onClick={() => onSelectProject(project.id)}
                 className={`w-full p-3 flex items-center space-x-3 rounded-lg transition-colors text-left ${
                   currentProjectId === project.id
-                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                    : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-gray-100 dark:bg-gray-900 text-black dark:text-white'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-900'
                 }`}
               >
                 <MessageSquare className="h-4 w-4 text-gray-500" />

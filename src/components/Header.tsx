@@ -7,21 +7,21 @@ const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 transition-colors duration-200">
+    <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black transition-colors duration-200">
       <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-between items-center">
         <Link to="/" className="flex items-center space-x-2 group">
-          <div className="h-10 w-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:from-indigo-600 group-hover:to-purple-700 transition-all">
-            <LinkIcon className="h-5 w-5 text-white" />
+          <div className="h-10 w-10 bg-black dark:bg-white rounded-lg flex items-center justify-center group-hover:bg-gray-800 dark:group-hover:bg-gray-200 transition-all">
+            <LinkIcon className="h-5 w-5 text-white dark:text-black" />
           </div>
           <div>
-            <h1 className="font-bold text-xl tracking-tight group-hover:text-indigo-500 transition-colors">Velkros</h1>
+            <h1 className="font-bold text-xl tracking-tight group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">Velkros</h1>
             <p className="text-xs text-gray-600 dark:text-gray-400">Connect Your Apps with Ease</p>
           </div>
         </Link>
 
         <div className="flex items-center space-x-4">
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-150"
             aria-label="Download schema"
             title="Download schema"
           >
@@ -29,7 +29,7 @@ const Header: React.FC = () => {
           </button>
           
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-150"
             aria-label="Settings"
             title="Settings"
           >
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
           </button>
           
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-150"
             aria-label="Help"
             title="Help"
           >
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
           </button>
           
           <button 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-150"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors duration-150"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}

@@ -5,14 +5,14 @@ import { BookOpen, Check } from 'lucide-react';
 
 const Documentation: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col">
       <Navigation />
       
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="max-w-4xl">
             <div className="flex items-center mb-8">
-              <BookOpen className="h-8 w-8 text-indigo-500 mr-4" />
+              <BookOpen className="h-8 w-8 text-black dark:text-white mr-4" />
               <h1 className="text-3xl font-bold">Documentation</h1>
             </div>
 
@@ -24,25 +24,25 @@ const Documentation: React.FC = () => {
                 </p>
                 
                 <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-black p-6 rounded-lg border border-gray-200 dark:border-gray-800">
                     <h3 className="text-xl font-semibold mb-4">Quick Start</h3>
                     <ol className="space-y-4">
                       <li className="flex items-start">
-                        <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-500 rounded-full flex items-center justify-center mr-3 mt-1">1</span>
+                        <span className="flex-shrink-0 w-6 h-6 bg-gray-100 dark:bg-gray-900 text-black dark:text-white rounded-full flex items-center justify-center mr-3 mt-1">1</span>
                         <span>Create a new project in the dashboard</span>
                       </li>
                       <li className="flex items-start">
-                        <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-500 rounded-full flex items-center justify-center mr-3 mt-1">2</span>
+                        <span className="flex-shrink-0 w-6 h-6 bg-gray-100 dark:bg-gray-900 text-black dark:text-white rounded-full flex items-center justify-center mr-3 mt-1">2</span>
                         <span>Describe your API needs in natural language</span>
                       </li>
                       <li className="flex items-start">
-                        <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-500 rounded-full flex items-center justify-center mr-3 mt-1">3</span>
+                        <span className="flex-shrink-0 w-6 h-6 bg-gray-100 dark:bg-gray-900 text-black dark:text-white rounded-full flex items-center justify-center mr-3 mt-1">3</span>
                         <span>Get instant API recommendations and integration guides</span>
                       </li>
                     </ol>
                   </div>
                   
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <div className="bg-white dark:bg-black p-6 rounded-lg border border-gray-200 dark:border-gray-800">
                     <h3 className="text-xl font-semibold mb-4">Key Features</h3>
                     <ul className="space-y-3">
                       {[
@@ -53,7 +53,7 @@ const Documentation: React.FC = () => {
                         'API compatibility checks'
                       ].map((feature) => (
                         <li key={feature} className="flex items-center">
-                          <Check className="h-5 w-5 text-green-500 mr-2" />
+                          <Check className="h-5 w-5 text-black dark:text-white mr-2" />
                           <span>{feature}</span>
                         </li>
                       ))}

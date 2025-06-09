@@ -18,18 +18,18 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
     >
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0">
-          <Bot className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+        <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center flex-shrink-0">
+          <Bot className="h-4 w-4 text-black dark:text-white" />
         </div>
       )}
       
-      <div className={`max-w-[80%] ${isUser ? 'bg-blue-500 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'} p-3 rounded-lg`}>
+      <div className={`max-w-[80%] ${isUser ? 'bg-black dark:bg-white text-white dark:text-black' : 'bg-gray-100 dark:bg-gray-900 text-black dark:text-white'} p-3 rounded-lg`}>
         {message.content}
       </div>
       
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
-          <User className="h-4 w-4 text-white" />
+        <div className="w-8 h-8 rounded-full bg-black dark:bg-white flex items-center justify-center flex-shrink-0">
+          <User className="h-4 w-4 text-white dark:text-black" />
         </div>
       )}
     </motion.div>

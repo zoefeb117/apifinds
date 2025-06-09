@@ -35,19 +35,19 @@ const Blog: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col">
       <Navigation />
       
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="flex items-center justify-between mb-12">
             <div className="flex items-center">
-              <BookOpen className="h-8 w-8 text-indigo-500 mr-4" />
+              <BookOpen className="h-8 w-8 text-black dark:text-white mr-4" />
               <h1 className="text-3xl font-bold">Blog</h1>
             </div>
             
             <div className="flex gap-4">
-              <select className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-2">
+              <select className="bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg px-4 py-2">
                 <option>All Categories</option>
                 <option>Tutorials</option>
                 <option>Security</option>
@@ -58,7 +58,7 @@ const Blog: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <article key={post.title} className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+              <article key={post.title} className="bg-white dark:bg-black rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800">
                 <img
                   src={post.image}
                   alt={post.title}
@@ -66,14 +66,14 @@ const Blog: React.FC = () => {
                 />
                 <div className="p-6">
                   <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    <span className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-500 rounded-full text-xs font-medium">
+                    <span className="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-black dark:text-white rounded-full text-xs font-medium">
                       {post.category}
                     </span>
                     <span className="mx-2">•</span>
                     <time>{post.readTime}</time>
                   </div>
                   
-                  <h2 className="text-xl font-bold mb-3 hover:text-indigo-500 cursor-pointer">
+                  <h2 className="text-xl font-bold mb-3 hover:text-gray-600 dark:hover:text-gray-400 cursor-pointer">
                     {post.title}
                   </h2>
                   
@@ -87,7 +87,7 @@ const Blog: React.FC = () => {
                       <span className="text-sm text-gray-600 dark:text-gray-400">{post.author}</span>
                     </div>
                     
-                    <button className="text-indigo-500 hover:text-indigo-600 font-medium flex items-center">
+                    <button className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-400 font-medium flex items-center">
                       Read More
                       <ArrowRight className="h-4 w-4 ml-1" />
                     </button>
@@ -98,7 +98,7 @@ const Blog: React.FC = () => {
           </div>
 
           <div className="mt-12 text-center">
-            <button className="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg font-medium transition-colors">
+            <button className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg font-medium transition-colors">
               Load More Posts
             </button>
           </div>

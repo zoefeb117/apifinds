@@ -13,22 +13,22 @@ const LandingPage: React.FC = () => {
 
   const features = [
     {
-      icon: <Sparkles className="h-6 w-6 text-purple-500" />,
+      icon: <Sparkles className="h-6 w-6 text-black dark:text-white" />,
       title: "Smart API Discovery",
       description: "Describe your needs in plain language, and we'll recommend the perfect APIs for your project."
     },
     {
-      icon: <Zap className="h-6 w-6 text-yellow-500" />,
+      icon: <Zap className="h-6 w-6 text-black dark:text-white" />,
       title: "Instant Integration Guides",
       description: "Get detailed integration instructions and code snippets for popular third-party services."
     },
     {
-      icon: <Shield className="h-6 w-6 text-green-500" />,
+      icon: <Shield className="h-6 w-6 text-black dark:text-white" />,
       title: "Security Best Practices",
       description: "Built-in security recommendations and authentication implementation guides."
     },
     {
-      icon: <Globe className="h-6 w-6 text-blue-500" />,
+      icon: <Globe className="h-6 w-6 text-black dark:text-white" />,
       title: "Comprehensive Coverage",
       description: "Support for payment, social media, AI, analytics, and many other API categories."
     }
@@ -53,13 +53,13 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+      <header className="border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="h-10 w-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <LinkIcon className="h-5 w-5 text-white" />
+              <div className="h-10 w-10 bg-black dark:bg-white rounded-lg flex items-center justify-center">
+                <LinkIcon className="h-5 w-5 text-white dark:text-black" />
               </div>
               <div>
                 <h1 className="text-xl font-bold">Velkros</h1>
@@ -67,27 +67,27 @@ const LandingPage: React.FC = () => {
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-6">
-              <Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+              <Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
                 Documentation
               </Link>
-              <Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+              <Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
                 Pricing
               </Link>
-              <Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">
+              <Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
                 Blog
               </Link>
             </div>
             <div className="flex items-center space-x-4">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900"
                 aria-label="Toggle theme"
               >
                 {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
               </button>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg flex items-center space-x-2"
+                className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg flex items-center space-x-2"
               >
                 <span>Open Dashboard</span>
                 <ArrowRight className="h-4 w-4" />
@@ -102,7 +102,7 @@ const LandingPage: React.FC = () => {
         <div className="relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div className="text-center">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 mb-6">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
                 Connect Your Apps<br />Like Never Before
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
@@ -117,11 +117,11 @@ const LandingPage: React.FC = () => {
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder="Describe what you want to build..."
-                    className="w-full px-6 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full px-6 py-4 bg-white dark:bg-black border border-gray-300 dark:border-gray-700 rounded-lg shadow-sm focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-black dark:focus:border-white"
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg"
                   >
                     <Send className="h-5 w-5" />
                   </button>
@@ -133,7 +133,7 @@ const LandingPage: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => handleQuickPrompt(quickPrompt)}
-                      className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 transition-colors"
+                      className="px-4 py-2 bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg text-sm text-gray-700 dark:text-gray-300 transition-colors"
                     >
                       {quickPrompt}
                     </button>
@@ -144,14 +144,14 @@ const LandingPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={() => navigate('/dashboard')}
-                  className="px-8 py-4 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-lg font-semibold flex items-center justify-center space-x-2"
+                  className="px-8 py-4 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg text-lg font-semibold flex items-center justify-center space-x-2"
                 >
                   <span>Start Building</span>
                   <ArrowRight className="h-5 w-5" />
                 </button>
                 <button
                   onClick={() => navigate('/docs')}
-                  className="px-8 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg text-lg font-semibold flex items-center justify-center space-x-2"
+                  className="px-8 py-4 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg text-lg font-semibold flex items-center justify-center space-x-2"
                 >
                   <span>View Documentation</span>
                   <Code className="h-5 w-5" />
@@ -162,7 +162,7 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* Features Section */}
-        <div className="bg-white dark:bg-gray-900 py-24">
+        <div className="bg-white dark:bg-black py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">Why Choose Velkros?</h2>
@@ -174,9 +174,9 @@ const LandingPage: React.FC = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+                  className="p-6 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow"
                 >
-                  <div className="w-12 h-12 bg-white dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-white dark:bg-black rounded-lg flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-800">
                     {feature.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
@@ -188,7 +188,7 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* How It Works */}
-        <div className="bg-gray-50 dark:bg-gray-800 py-24">
+        <div className="bg-gray-50 dark:bg-gray-900 py-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">How Velkros Works</h2>
@@ -197,21 +197,21 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="relative p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">1</div>
-                <MessageSquare className="h-8 w-8 text-indigo-500 mb-4" />
+              <div className="relative p-6 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-bold">1</div>
+                <MessageSquare className="h-8 w-8 text-black dark:text-white mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Describe Your Needs</h3>
                 <p className="text-gray-600 dark:text-gray-400">Tell us what you want to build using natural language</p>
               </div>
-              <div className="relative p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">2</div>
-                <Rocket className="h-8 w-8 text-indigo-500 mb-4" />
+              <div className="relative p-6 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-bold">2</div>
+                <Rocket className="h-8 w-8 text-black dark:text-white mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Get Recommendations</h3>
                 <p className="text-gray-600 dark:text-gray-400">Receive personalized API suggestions and integration guides</p>
               </div>
-              <div className="relative p-6 bg-white dark:bg-gray-700 rounded-xl border border-gray-200 dark:border-gray-600">
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold">3</div>
-                <Lock className="h-8 w-8 text-indigo-500 mb-4" />
+              <div className="relative p-6 bg-white dark:bg-black rounded-xl border border-gray-200 dark:border-gray-800">
+                <div className="absolute -top-4 -left-4 w-8 h-8 bg-black dark:bg-white text-white dark:text-black rounded-full flex items-center justify-center font-bold">3</div>
+                <Lock className="h-8 w-8 text-black dark:text-white mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Integrate Securely</h3>
                 <p className="text-gray-600 dark:text-gray-400">Follow our security-first implementation guides</p>
               </div>
@@ -220,15 +220,15 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-indigo-500 to-purple-600 py-16">
+        <div className="bg-black dark:bg-white py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Ready to Transform Your API Integration?</h2>
-            <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-white dark:text-black mb-4">Ready to Transform Your API Integration?</h2>
+            <p className="text-xl text-gray-300 dark:text-gray-700 mb-8 max-w-2xl mx-auto">
               Start building better applications faster with Velkros.
             </p>
             <button
               onClick={() => navigate('/dashboard')}
-              className="px-8 py-4 bg-white text-indigo-600 rounded-lg text-lg font-semibold hover:bg-indigo-50 transition-colors"
+              className="px-8 py-4 bg-white dark:bg-black text-black dark:text-white rounded-lg text-lg font-semibold hover:bg-gray-100 dark:hover:bg-gray-900 transition-colors"
             >
               Get Started for Free
             </button>
@@ -240,8 +240,8 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex items-center space-x-3 md:col-span-4 mb-8">
-              <div className="h-8 w-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <LinkIcon className="h-4 w-4 text-white" />
+              <div className="h-8 w-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
+                <LinkIcon className="h-4 w-4 text-white dark:text-black" />
               </div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 © 2025 Velkros. All rights reserved.
@@ -250,37 +250,37 @@ const LandingPage: React.FC = () => {
             <div>
               <h3 className="font-semibold mb-3">Product</h3>
               <ul className="space-y-2">
-                <li><Link to="/features" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Features</Link></li>
-                <li><Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Pricing</Link></li>
-                <li><Link to="/integrations" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Integrations</Link></li>
-                <li><Link to="/enterprise" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Enterprise</Link></li>
+                <li><Link to="/features" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Features</Link></li>
+                <li><Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Pricing</Link></li>
+                <li><Link to="/integrations" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Integrations</Link></li>
+                <li><Link to="/enterprise" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Enterprise</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-3">Resources</h3>
               <ul className="space-y-2">
-                <li><Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Documentation</Link></li>
-                <li><Link to="/guides" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">API Guides</Link></li>
-                <li><Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Blog</Link></li>
-                <li><Link to="/changelog" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Changelog</Link></li>
+                <li><Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Documentation</Link></li>
+                <li><Link to="/guides" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">API Guides</Link></li>
+                <li><Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</Link></li>
+                <li><Link to="/changelog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Changelog</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-3">Company</h3>
               <ul className="space-y-2">
-                <li><Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">About</Link></li>
-                <li><Link to="/careers" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Careers</Link></li>
-                <li><Link to="/contact" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Contact</Link></li>
-                <li><Link to="/partners" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Partners</Link></li>
+                <li><Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">About</Link></li>
+                <li><Link to="/careers" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Careers</Link></li>
+                <li><Link to="/contact" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Contact</Link></li>
+                <li><Link to="/partners" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Partners</Link></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-3">Legal</h3>
               <ul className="space-y-2">
-                <li><Link to="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Privacy Policy</Link></li>
-                <li><Link to="/terms" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Terms of Service</Link></li>
-                <li><Link to="/security" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Security</Link></li>
-                <li><Link to="/compliance" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Compliance</Link></li>
+                <li><Link to="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Terms of Service</Link></li>
+                <li><Link to="/security" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Security</Link></li>
+                <li><Link to="/compliance" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Compliance</Link></li>
               </ul>
             </div>
           </div>

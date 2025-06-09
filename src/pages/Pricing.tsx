@@ -54,13 +54,13 @@ const Pricing: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-black flex flex-col">
       <Navigation />
       
       <div className="flex-1">
         <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center mb-12">
-            <CreditCard className="h-12 w-12 text-indigo-500 mx-auto mb-4" />
+            <CreditCard className="h-12 w-12 text-black dark:text-white mx-auto mb-4" />
             <h1 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Choose the plan that best fits your needs. All plans include our core features.
@@ -72,12 +72,12 @@ const Pricing: React.FC = () => {
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden ${
-                  plan.popular ? 'ring-2 ring-indigo-500' : 'border border-gray-200 dark:border-gray-700'
+                className={`relative bg-white dark:bg-black rounded-xl shadow-lg overflow-hidden ${
+                  plan.popular ? 'ring-2 ring-black dark:ring-white' : 'border border-gray-200 dark:border-gray-800'
                 }`}
               >
                 {plan.popular && (
-                  <div className="absolute top-0 right-0 bg-indigo-500 text-white px-3 py-1 text-sm font-medium">
+                  <div className="absolute top-0 right-0 bg-black dark:bg-white text-white dark:text-black px-3 py-1 text-sm font-medium">
                     Most Popular
                   </div>
                 )}
@@ -93,7 +93,7 @@ const Pricing: React.FC = () => {
                   <ul className="space-y-4 mb-8">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
+                        <Check className="h-5 w-5 text-black dark:text-white mr-2 mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -102,8 +102,8 @@ const Pricing: React.FC = () => {
                   <button
                     className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${
                       plan.popular
-                        ? 'bg-indigo-500 hover:bg-indigo-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        ? 'bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200'
+                        : 'bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-800'
                     }`}
                   >
                     {plan.name === 'Enterprise' ? 'Contact Sales' : 'Get Started'}

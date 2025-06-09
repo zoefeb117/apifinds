@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         <Link to="/" className="flex items-center space-x-2 group">
           <div className="h-10 w-10 flex items-center justify-center group-hover:opacity-80 transition-all">
             <img 
-              src={theme === 'light' ? '/logo dark mode.png' : '/logo light mode.png'} 
+              src={theme === 'light' ? '/logo light mode.png' : '/logo dark mode.png'} 
               alt="Velkros Logo" 
               className="h-8 w-8 object-contain"
             />

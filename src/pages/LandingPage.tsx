@@ -46,9 +46,6 @@ const LandingPage: React.FC = () => {
               <Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
                 Documentation
               </Link>
-              <Link to="/pricing" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
-                Pricing
-              </Link>
               <Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
                 Blog
               </Link>

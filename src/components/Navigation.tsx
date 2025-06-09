@@ -17,7 +17,6 @@ const Navigation: React.FC = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold">Velkros</h1>
-              <p className="text-xs text-gray-600 dark:text-gray-400">Connect Your Apps with Ease</p>
             </div>
           </Link>
           

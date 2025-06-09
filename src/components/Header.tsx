@@ -15,7 +15,6 @@ const Header: React.FC = () => {
           </div>
           <div>
             <h1 className="font-bold text-xl tracking-tight group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">Velkros</h1>
-            <p className="text-xs text-gray-600 dark:text-gray-400">Connect Your Apps with Ease</p>
           </div>
         </Link>
 

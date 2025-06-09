@@ -6,6 +6,7 @@ import ChatPanel from './ChatPanel';
 import OutputPanel from './OutputPanel';
 import { ChatMessage, Schema } from '../types';
 import { useChat } from '../hooks/useChat';
+import { useIntercom } from '../hooks/useIntercom';
 
 const Dashboard: React.FC = () => {
   const [resizing, setResizing] = useState(false);
@@ -23,6 +24,17 @@ const Dashboard: React.FC = () => {
     currentProjectId,
     createNewChat
   } = useChat(initialPrompt);
+
+  // Initialize Intercom for dashboard users
+  // In a real app, you would pass actual user data here
+  const mockUser = {
+    id: 'dashboard-user-' + Date.now(),
+    name: 'Dashboard User',
+    email: 'user@example.com',
+    createdAt: Math.floor(Date.now() / 1000) // Unix timestamp in seconds
+  };
+  
+  useIntercom(mockUser);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setResizing(true);

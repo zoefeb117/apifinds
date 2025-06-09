@@ -17,3 +17,10 @@ export interface Project {
   name: string;
   lastUpdated: string;
 }
+
+// Extend the Window interface to include Intercom
+declare global {
+  interface Window {
+    Intercom?: any;
+  }
+}

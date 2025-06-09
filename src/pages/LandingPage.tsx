@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../components/ThemeProvider';
+import { useIntercom } from '../hooks/useIntercom';
 import { 
   Sun, Moon, ArrowRight, Send
 } from 'lucide-react';
@@ -9,6 +10,9 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [prompt, setPrompt] = useState('');
+
+  // Initialize Intercom for anonymous users on landing page
+  useIntercom();
 
   const quickPrompts = [
     "I need to integrate Stripe payments into my e-commerce app",

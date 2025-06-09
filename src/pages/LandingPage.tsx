@@ -49,9 +49,14 @@ const LandingPage: React.FC = () => {
               <Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
                 Documentation
               </Link>
-              <Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">
+              <a 
+                href="https://www.velkros-beta.com/blog" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
+              >
                 Blog
-              </Link>
+              </a>
             </div>
             <div className="flex items-center space-x-4">
               <button
@@ -156,7 +161,7 @@ const LandingPage: React.FC = () => {
               <h3 className="font-semibold mb-3">Resources</h3>
               <ul className="space-y-2">
                 <li><Link to="/docs" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Documentation</Link></li>
-                <li><Link to="/blog" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</Link></li>
+                <li><a href="https://www.velkros-beta.com/blog" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white">Blog</a></li>
               </ul>
             </div>
             <div>

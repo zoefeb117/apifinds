@@ -25,22 +25,24 @@ const Navigation: React.FC = () => {
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            {[
-              { path: '/docs', label: 'Documentation' },
-              { path: '/blog', label: 'Blog' }
-            ].map(({ path, label }) => (
-              <Link
-                key={path}
-                to={path}
-                className={`text-sm font-medium transition-colors ${
-                  location.pathname === path
-                    ? 'text-black dark:text-white'
-                    : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
-                }`}
-              >
-                {label}
-              </Link>
-            ))}
+            <Link
+              to="/docs"
+              className={`text-sm font-medium transition-colors ${
+                location.pathname === '/docs'
+                  ? 'text-black dark:text-white'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
+              }`}
+            >
+              Documentation
+            </Link>
+            <a
+              href="https://www.velkros-beta.com/blog"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+            >
+              Blog
+            </a>
           </div>
 
           <div className="flex items-center space-x-4">

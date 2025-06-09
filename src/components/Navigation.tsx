@@ -36,7 +36,7 @@ const Navigation: React.FC = () => {
               Documentation
             </Link>
             <a
-              href="https://www.velkros-beta.com/blog"
+              href="https://www.velkros.com/blog"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"

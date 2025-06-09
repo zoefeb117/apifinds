@@ -16,15 +16,7 @@ const Roadmap: React.FC = () => {
           </div>
           
           <div className="bg-white dark:bg-black rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden" style={{ height: '600px' }}>
-            <iframe 
-              src="https://nonstop-sunfish-444.notion.site/ebd/20d0d4a2aa0580ec8db7de3a2b416cee" 
-              width="100%" 
-              height="600" 
-              frameBorder="0" 
-              allowFullScreen
-              title="Velkros Public Roadmap"
-              loading="lazy"
-            />
+            <iframe src="https://nonstop-sunfish-444.notion.site/ebd/20d0d4a2aa0580ec8db7de3a2b416cee" width="100%" height="600" frameborder="0" allowfullscreen />
           </div>
         </div>
       </div>

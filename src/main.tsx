@@ -4,7 +4,7 @@ import App from './App.tsx';
 import './index.css';
 
 // Update document title
-document.title = 'Velkros - Connect Your Apps with Ease';
+document.title = 'Velkros - beta';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

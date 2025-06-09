@@ -24,7 +24,6 @@ const Navigation: React.FC = () => {
           <div className="hidden md:flex items-center space-x-8">
             {[
               { path: '/docs', label: 'Documentation' },
-              { path: '/pricing', label: 'Pricing' },
               { path: '/blog', label: 'Blog' }
             ].map(({ path, label }) => (
               <Link

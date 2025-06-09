@@ -15,10 +15,13 @@ const Roadmap: React.FC = () => {
             <h1 className="text-3xl font-bold">Product Roadmap</h1>
           </div>
           
-          <div className="bg-white dark:bg-black rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden" style={{ height: 'calc(100vh - 200px)' }}>
-            <iframe
-              src="https://www.notion.so/Velkros-Public-Roadmap-20d0d4a2aa0580ec8db7de3a2b416cee?source=copy_link"
-              className="w-full h-full border-0"
+          <div className="bg-white dark:bg-black rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden" style={{ height: '600px' }}>
+            <iframe 
+              src="https://nonstop-sunfish-444.notion.site/ebd/20d0d4a2aa0580ec8db7de3a2b416cee" 
+              width="100%" 
+              height="600" 
+              frameBorder="0" 
+              allowFullScreen
               title="Velkros Public Roadmap"
               loading="lazy"
             />

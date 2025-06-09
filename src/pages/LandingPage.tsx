@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../components/ThemeProvider';
 import { 
-  Link as LinkIcon, Sun, Moon, ArrowRight, Send
+  Sun, Moon, ArrowRight, Send
 } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
@@ -34,8 +34,12 @@ const LandingPage: React.FC = () => {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link to="/" className="flex items-center space-x-3">
-              <div className="h-10 w-10 bg-black dark:bg-white rounded-lg flex items-center justify-center">
-                <LinkIcon className="h-5 w-5 text-white dark:text-black" />
+              <div className="h-10 w-10 flex items-center justify-center">
+                <img 
+                  src={theme === 'light' ? '/logo dark mode.png' : '/logo light mode.png'} 
+                  alt="Velkros Logo" 
+                  className="h-8 w-8 object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-xl font-bold">Velkros</h1>
@@ -131,8 +135,12 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex items-center space-x-3 md:col-span-3 mb-8">
-              <div className="h-8 w-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
-                <LinkIcon className="h-4 w-4 text-white dark:text-black" />
+              <div className="h-8 w-8 flex items-center justify-center">
+                <img 
+                  src={theme === 'light' ? '/logo dark mode.png' : '/logo light mode.png'} 
+                  alt="Velkros Logo" 
+                  className="h-6 w-6 object-contain"
+                />
               </div>
               <span className="text-sm text-gray-600 dark:text-gray-400">
                 © 2025 Velkros. All rights reserved.
